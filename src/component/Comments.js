@@ -3,9 +3,8 @@ import React from "react";
 function Comments(props) {
   const comData = props.comdata;
   const comName = props.comname;
-  // console.log(comData);
   return (
-    <div className="pdf">
+    <div className="">
       <br />
       <h4 className="text-center" style={{ textAlign: "center" }}>
         {comName}

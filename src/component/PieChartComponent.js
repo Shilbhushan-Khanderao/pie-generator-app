@@ -1,5 +1,3 @@
-// import { View, StyleSheet } from "@react-pdf/renderer";
-// import { Page, Document } from "react-pdf";
 import {
   PieChart,
   Pie,
@@ -10,23 +8,9 @@ import {
 } from "recharts";
 
 export const PieChartComponent = (props) => {
-  // const styles = StyleSheet.create({
-  //   page: {
-  //     flexDirection: "row",
-  //     backgroundColor: "#E4E4E4",
-  //   },
-  //   section: {
-  //     margin: 10,
-  //     padding: 10,
-  //     flexGrow: 1,
-  //   },
-  // });
-
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#D733FF"];
-
   const data = props.data;
   const name = props.name;
-
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
     cx,
