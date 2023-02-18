@@ -1,10 +1,19 @@
 import React from "react";
 
+//to plot comments
 function Comments(props) {
+
+  //assigning data from props
   const comData = props.comdata;
   const comName = props.comname;
+  //to check for printing condition for page break
+  const ifPresent =
+    comName.includes("Theory") || comName.includes("Lab") ? true : false;
   return (
-    <div className="">
+    <div
+      className="container"
+      style={{ pageBreakBefore: ifPresent ? "always" : "auto" }}
+    >
       <br />
       <h4 className="text-center" style={{ textAlign: "center" }}>
         {comName}
@@ -12,7 +21,9 @@ function Comments(props) {
       <hr />
       <ul className="list-group" style={{ margin: 5 }}>
         {comData.map((entry, index) => (
-          <li className="list-group-item text-left">{comData[index]}</li>
+          <li key={index} className="list-group-item text-left">
+            {comData[index]}
+          </li>
         ))}
       </ul>
     </div>

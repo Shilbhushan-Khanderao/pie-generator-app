@@ -7,11 +7,58 @@ import {
   Tooltip,
 } from "recharts";
 
+//required global variables for count of piechart occurence
+let explanationCount = 0;
+let paceCount = 0;
+let interactionCount = 0;
+let practicalCount = 0;
+let overallCount = 0;
+
+//to plot piechart from given data
 export const PieChartComponent = (props) => {
+  //required data for piechart
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#D733FF"];
   const data = props.data;
   const name = props.name;
+  let decision = false;
+
+  //condition for giving page break
+  if (name.includes("Explanation")) {
+    explanationCount++;
+    explanationCount >= 3 ? (decision = true) : (decision = false);
+  }
+  //condition for giving page break, nested to check if explanation is present 1 or 2 times
+  if (name.includes("Pace")) {
+    paceCount++;
+    explanationCount >= 3
+      ? paceCount >= 3
+        ? (decision = true)
+        : (decision = false)
+      : paceCount >= 2
+      ? (decision = true)
+      : (decision = false);
+  }
+  if (name.includes("Interaction")) {
+    interactionCount++;
+    interactionCount >= 3 ? (decision = true) : (decision = false);
+  }
+  if (name.includes("Practical")) {
+    practicalCount++;
+    explanationCount >= 3
+      ? practicalCount >= 3
+        ? (decision = true)
+        : (decision = false)
+      : practicalCount >= 2
+      ? (decision = true)
+      : (decision = false);
+  }
+  if (name.includes("Overall")) {
+    overallCount++;
+    overallCount >= 3 ? (decision = true) : (decision = false);
+  }
+
   const RADIAN = Math.PI / 180;
+  //for label
   const renderCustomizedLabel = ({
     cx,
     cy,
@@ -39,12 +86,17 @@ export const PieChartComponent = (props) => {
   };
 
   return (
-    <div className="container">
+    <div
+      className="container"
+      style={{
+        pageBreakAfter: decision ? "always" : "auto",
+      }}
+    >
       <div className="row d-flex justify-content-center text-center">
         <div className="col-md-8 pdf">
           <br />
           <h4 style={{ textAlign: "center" }}>{name}</h4>
-          <hr />
+
           <div className="container-fluid">
             <ResponsiveContainer
               width="100%"
@@ -52,8 +104,8 @@ export const PieChartComponent = (props) => {
               style={{ alignItems: "center", justifyContent: "center" }}
             >
               <PieChart
-                width={450}
-                height={450}
+                width={500}
+                height={500}
                 style={{ alignItems: "center", justifyContent: "center" }}
               >
                 <Pie
@@ -63,7 +115,7 @@ export const PieChartComponent = (props) => {
                   labelLine={true}
                   label={renderCustomizedLabel}
                   isAnimationActive={true}
-                  outerRadius={110}
+                  outerRadius={130}
                   fill="#8884d8"
                   dataKey="count"
                   nameKey="fb"

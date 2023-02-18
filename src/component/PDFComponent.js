@@ -2,39 +2,45 @@ import React, { useState } from "react";
 import Comments from "./Comments";
 import PieChartComponent from "./PieChartComponent";
 import Papa from "papaparse";
-import pdfMake from "pdfmake";
-import htmlToPdfmake from "html-to-pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
-import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
 
+//processing of csv file, creating JSON data, generating JSON data with count 
 function PDFComponent(props) {
+  //state to pass along component as props
   const [jsonData, setJsonData] = useState([]);
   const [hName, setHName] = useState([]);
   const [comdata, setComData] = useState([]);
   const [comname, setComName] = useState([]);
   const [show, setShow] = useState(false);
 
+  //arrays to temporarily store data
   let headers = [];
   let JSONdata = [];
   let headersName = [];
   let comName = [];
   let comData = [];
-  let file = props.file;
 
+  //input data from form elements taken from props from inputComponent
+  let file = props.file;
+  let title = props.title;
+  let batch = props.batch;
+  let faculty = props.faculty;
+  let moduleco = props.moduleco;
+  let moduleName = props.moduleName;
+
+  //converting csv data to JSON data by papaparse library and passing that data to createCount function for further operations
   const generateChart = () => {
     setShow(true);
     Papa.parse(file, {
       complete: function (results) {
-        console.log(results.data);
+        // console.log(results.data);
         createCount(results.data);
       },
     });
   };
+
+  //JSON data converted to count from coloumns of data and calling createData and createComments function
   function createCount(d) {
     headers = d[0];
-
-    // console.log(d);
     for (let i = 0; i < headers.length; i++) {
       if (
         headers[i].includes("Explanation") ||
@@ -46,10 +52,7 @@ function PDFComponent(props) {
         headersName.push(headers[i]);
         JSONdata.push(createData(d, i));
       }
-      if (
-        headers[i].includes("Comments") ||
-        headers[i].includes("additional")
-      ) {
+      if (headers[i].includes("Theory") || headers[i].includes("Lab")) {
         comName.push(headers[i]);
         comData.push(createComments(d, i));
       }
@@ -60,6 +63,7 @@ function PDFComponent(props) {
     setComData(comData);
   }
 
+  //count is created for each coloumns with parameters and there occurence
   function createData(d, hi) {
     var gCount,
       vgCount,
@@ -132,10 +136,11 @@ function PDFComponent(props) {
         }
       }
     }
-    console.log(generated);
+    // console.log(generated);
     return generated;
   }
 
+  //to read all the comments from coloumns and push to array by excluding some values
   function createComments(d, hi) {
     let arr = [];
     let generated = [];
@@ -147,49 +152,28 @@ function PDFComponent(props) {
         arr[i] !== "No" &&
         arr[i] !== "NA" &&
         arr[i] !== "Na" &&
+        arr[i] !== "." &&
         onlyLettersSpacesDots(arr[i])
       ) {
         generated.push(arr[i]);
       }
     }
-    console.log(generated);
+    // console.log(generated);
     return generated;
   }
 
+  //to exclude the mentioned elements if present in string
   function onlyLettersSpacesDots(str) {
     return /^[a-zA-Z\s.,]+$/.test(str);
   }
-  var htmlToImage = require("html-to-image");
 
-  const PDF = () => {
-    const pdf = new jsPDF("portrait", "pt", "a4");
-    const elems = document.querySelectorAll(".pdf");
-    elems.forEach(async (elem, idx) => {
-      if (idx < elems.length - 1) {
-        const data = await html2canvas(elem);
-        const img = data.toDataURL("image/png");
-        const imgProperties = pdf.getImageProperties(img);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight =
-          (imgProperties.height * pdfWidth) / imgProperties.width;
-        pdf.addImage(img, "JPEG", 10, 10, pdfWidth, pdfHeight);
-        pdf.addPage();
-      } else {
-        const data = await html2canvas(elem);
-        const img = data.toDataURL("image/png");
-        const imgProperties = pdf.getImageProperties(img);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight =
-          (imgProperties.height * pdfWidth) / imgProperties.width;
-        pdf.addImage(img, "JPEG", 10, 10, pdfWidth, pdfHeight);
-        pdf.save("Piechart.pdf");
-      }
-      const pdfTable = document.getElementById("comment");
-      var html = htmlToPdfmake(pdfTable.innerHTML);
-      const documentDefinition = { content: html };
-      pdfMake.vfs = pdfFonts.pdfMake.vfs;
-      pdfMake.createPdf(documentDefinition).open();
-    });
+  //To print the entire generated piechart and comments data from html
+  const Print = () => {
+    let printContents = document.getElementById("pdf").innerHTML;
+    let originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
   };
 
   return (
@@ -205,12 +189,25 @@ function PDFComponent(props) {
           </button>
         </div>
         <div className="col-md-4 justify-content-end">
-          <button className="btn btn-success text-right" onClick={PDF}>
+          <button className="btn btn-success text-right" onClick={Print}>
             Download
           </button>
         </div>
       </div>
       <div id="pdf" className="container" style={{}}>
+        <div id="titles">
+          {show && (
+            <div className="row m-1">
+              <h2 className="text-center">{title}</h2>
+              <br />
+              <h5 className="col-sm-6">Module Name : {moduleName}</h5>
+              <h5 className="col-sm-6">Batch : {batch}</h5>
+              <h5 className="col-sm-6">Faculty Name : {faculty}</h5>
+              <h5 className="col-sm-6">Module Coordinator : {moduleco}</h5>
+            </div>
+          )}
+        </div>
+        <hr />
         <div id="piechart">
           {show &&
             jsonData.map(function (element, index) {
@@ -238,5 +235,4 @@ function PDFComponent(props) {
     </div>
   );
 }
-
 export default PDFComponent;
