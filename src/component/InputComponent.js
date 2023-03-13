@@ -51,7 +51,7 @@ export const InputComponent = () => {
             <label className="col-sm-2 col-form-label">Module Name</label>
             <div className="dropdown col-sm-10">
               <select
-                className="btn btn-outline-secondary"
+                className="btn btn-outline"
                 onChange={(event) => setModuleName(event.target.value)}
               >
                 <option value="select">Select</option>
