@@ -2,16 +2,17 @@ import React from "react";
 import { useState } from "react";
 import PDFComponent from "./PDFComponent";
 import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 
 //to get all required data from user
 export const InputComponent = () => {
   //state to pass it as props to other component
   const [File, setFile] = useState();
   const [show, setShow] = useState(false);
-  const [title, setTitle] = useState();
   const [moduleName, setModuleName] = useState();
   const [batch, setBatch] = useState();
   const [faculty, setFaculty] = useState();
+  const [faculty1, setFaculty1] = useState();
   const [moduleco, setModuleco] = useState();
 
   const moduleCoordinatorName = [
@@ -25,13 +26,24 @@ export const InputComponent = () => {
   ];
 
   const moduleNameList = [
-    { value: "CPOS", label: "CPOS" },
-    { value: "OOPJ", label: "OOPJ" },
-    { value: "ADS", label: "ADS" },
-    { value: "DBT", label: "DBT" },
-    { value: "WPT", label: "WPT" },
-    { value: "WJP", label: "WJP" },
-    { value: "SDM", label: "SDM" },
+    { value: "Concept of Programming & Operating Systems", label: "CPOS" },
+    { value: "Object Oriented Programming with Java", label: "OOPJ" },
+    { value: "Algorithm & Data Structures", label: "ADS" },
+    { value: "Database Technologies", label: "DBT" },
+    { value: "Web Programming Technologies", label: "WPT" },
+    { value: "Web Java Programming", label: "WJP" },
+    { value: "Software Development Methodologies", label: "SDM" },
+  ];
+
+  const facultyNameList = [
+    { value: "Mrs. Kiran Waghmare", label: "Mrs. Kiran Waghmare" },
+    { value: "Mr. Shrinivas Kalewad", label: "Mr. Shrinivas Kalewad" },
+    { value: "Mr. Sameer Dehadrai", label: "Mr. Sameer Dehadrai" },
+    { value: "Mr. Abhishek Purohit", label: "Mr. Abhishek Purohit" },
+    { value: "Mr. Vikram Sulakhe", label: "Mr. Vikram Sulakhe" },
+    { value: "Mr. Vipul Tembulwar", label: "Mr. Vipul Tembulwar" },
+    { value: "Mr. Mazrul Ansari", label: "Mr. Mazrul Ansari" },
+    { value: "Mr. Malkeet Singh", label: "Mr. Malkeet Singh" },
   ];
 
   //to set state of file uploaded
@@ -57,18 +69,6 @@ export const InputComponent = () => {
       <div>
         <form>
           <div className="form-group row m-1">
-            <label className="col-sm-2 col-form-label">Title of Document</label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control"
-                id="title"
-                placeholder="Title"
-                onChange={(event) => setTitle(event.target.value)}
-              />
-            </div>
-          </div>
-          <div className="form-group row m-1">
             <label className="col-sm-2 col-form-label">Module Name</label>
             <div className="dropdown col-sm-10">
               <Select
@@ -91,13 +91,21 @@ export const InputComponent = () => {
           </div>
           <div className="form-group row m-1">
             <label className="col-sm-2 col-form-label">Faculty Name</label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control"
-                id="faculty"
-                placeholder="Faculty Name"
-                onChange={(event) => setFaculty(event.target.value)}
+            <div className="col-sm-4">
+              <CreatableSelect
+                className="basic-multi-select"
+                classNamePrefix="select"
+                options={facultyNameList}
+                onChange={(event) => setFaculty(event.value)}
+              />
+            </div>
+            <div className="col-sm-4">
+              <CreatableSelect
+                placeholder="In case of two faculties"
+                className="basic-multi-select"
+                classNamePrefix="select"
+                options={facultyNameList}
+                onChange={(event) => setFaculty1(event.value)}
               />
             </div>
           </div>
@@ -105,7 +113,7 @@ export const InputComponent = () => {
             <label className="col-sm-2 col-form-label">
               Module Coordinater
             </label>
-            <div className="dropdown col-sm-10">
+            <div className="col-sm-10">
               <Select
                 options={moduleCoordinatorName}
                 onChange={(event) => setModuleco(event.value)}
@@ -141,10 +149,10 @@ export const InputComponent = () => {
             <div className="">
               <PDFComponent
                 file={File}
-                title={title}
                 moduleName={moduleName}
                 batch={batch}
                 faculty={faculty}
+                faculty1={faculty1}
                 moduleco={moduleco}
               />
             </div>

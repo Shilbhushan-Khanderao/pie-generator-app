@@ -3,7 +3,7 @@ import Comments from "./Comments";
 import PieChartComponent from "./PieChartComponent";
 import Papa from "papaparse";
 
-//processing of csv file, creating JSON data, generating JSON data with count 
+//processing of csv file, creating JSON data, generating JSON data with count
 function PDFComponent(props) {
   //state to pass along component as props
   const [jsonData, setJsonData] = useState([]);
@@ -21,11 +21,12 @@ function PDFComponent(props) {
 
   //input data from form elements taken from props from inputComponent
   let file = props.file;
-  let title = props.title;
   let batch = props.batch;
   let faculty = props.faculty;
+  let faculty1 = props.faculty1;
   let moduleco = props.moduleco;
   let moduleName = props.moduleName;
+  console.log(faculty1);
 
   //converting csv data to JSON data by papaparse library and passing that data to createCount function for further operations
   const generateChart = () => {
@@ -197,15 +198,20 @@ function PDFComponent(props) {
           </button>
         </div>
       </div>
-      <div id="pdf" className="container" style={{}}>
+      <div id="pdf" className="container">
         <div id="titles">
           {show && (
             <div className="row m-1">
-              <h2 className="text-center">{title}</h2>
+              <h2 className="text-center">
+                PG-DAC Module Feedback for {moduleName}
+              </h2>
               <br />
               <h5 className="col-sm-6">Module Name : {moduleName}</h5>
               <h5 className="col-sm-6">Batch : {batch}</h5>
-              <h5 className="col-sm-6">Faculty Name : {faculty}</h5>
+              <h5 className="col-sm-6">
+                Faculty Name : {faculty}
+                {faculty1 === undefined ? `` : `, ${faculty1}`}
+              </h5>
               <h5 className="col-sm-6">Module Coordinator : {moduleco}</h5>
             </div>
           )}
