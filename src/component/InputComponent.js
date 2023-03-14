@@ -91,7 +91,7 @@ export const InputComponent = () => {
           </div>
           <div className="form-group row m-1">
             <label className="col-sm-2 col-form-label">Faculty Name</label>
-            <div className="col-sm-4">
+            <div className="col-sm-5">
               <CreatableSelect
                 className="basic-multi-select"
                 classNamePrefix="select"
@@ -99,7 +99,7 @@ export const InputComponent = () => {
                 onChange={(event) => setFaculty(event.value)}
               />
             </div>
-            <div className="col-sm-4">
+            <div className="col-sm-5">
               <CreatableSelect
                 placeholder="In case of two faculties"
                 className="basic-multi-select"
