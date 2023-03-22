@@ -2,13 +2,16 @@ import React from "react";
 
 //to plot comments
 function Comments(props) {
-
   //assigning data from props
   const comData = props.comdata;
   const comName = props.comname;
   //to check for printing condition for page break
   const ifPresent =
-    comName.includes("Theory") || comName.includes("Lab") ? true : false;
+    comName.includes("Theory") ||
+    comName.includes("Lab") ||
+    comName.includes("Comments")
+      ? true
+      : false;
   return (
     <div
       className="container"

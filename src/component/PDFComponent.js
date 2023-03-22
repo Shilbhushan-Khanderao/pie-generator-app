@@ -57,6 +57,10 @@ function PDFComponent(props) {
         comName.push(headers[i]);
         comData.push(createComments(d, i));
       }
+      if (headers[i].includes("Comments")) {
+        comName.push(headers[i]);
+        comData.push(createComments(d, i));
+      }
     }
     setHName(headersName);
     setJsonData(JSONdata);
@@ -150,6 +154,12 @@ function PDFComponent(props) {
 
       if (
         arr[i] !== "" &&
+        arr[i] !== " " &&
+        arr[i] !== "No Comments" &&
+        arr[i] !== "NO Comments" &&
+        arr[i] !== "NO comments" &&
+        arr[i] !== "No comments" &&
+        arr[i] !== "Nothing" &&
         arr[i] !== "No" &&
         arr[i] !== "NA" &&
         arr[i] !== "Na" &&

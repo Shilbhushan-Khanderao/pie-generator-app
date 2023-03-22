@@ -18,7 +18,7 @@ export const InputComponent = () => {
   const moduleCoordinatorName = [
     { value: "Mrs. Kiran Waghmare", label: "Mrs. Kiran Waghmare" },
     { value: "Mr. Vipul Tembulwar", label: "Mr. Vipul Tembulwar" },
-    { value: "Mrs. Shweta Bhere", label: "Mrs. Shweta Bhere" },
+    { value: "Ms. Shweta Bhere", label: "Ms. Shweta Bhere" },
     { value: "Mr. Malkeet Singh", label: "Mr. Malkeet Singh" },
     { value: "Mr. Aniket Takmare", label: "Mr. Aniket Takmare" },
     { value: "Mr. Aditya Kansana", label: "Mr. Aditya Kansana" },
@@ -33,6 +33,8 @@ export const InputComponent = () => {
     { value: "Web Programming Technologies", label: "WPT" },
     { value: "Web Java Programming", label: "WJP" },
     { value: "Software Development Methodologies", label: "SDM" },
+    { value: "Aptitude", label: "Aptitude" },
+    { value: "Communication", label: "Communication" },
   ];
 
   const facultyNameList = [
@@ -44,6 +46,8 @@ export const InputComponent = () => {
     { value: "Mr. Vipul Tembulwar", label: "Mr. Vipul Tembulwar" },
     { value: "Mr. Mazrul Ansari", label: "Mr. Mazrul Ansari" },
     { value: "Mr. Malkeet Singh", label: "Mr. Malkeet Singh" },
+    { value: "Mr. Koustov Nandi", label: "Mr. Koustov Nandi" },
+    { value: "Dr. C P Johnson", label: "Dr. C P Johnson" },
   ];
 
   //to set state of file uploaded
