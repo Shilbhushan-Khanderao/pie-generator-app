@@ -220,7 +220,9 @@ function PDFComponent(props) {
               <h5 className="col-sm-6">Batch : {batch}</h5>
               <h5 className="col-sm-6">
                 Faculty Name : {faculty}
-                {faculty1 === undefined ? `` : `, ${faculty1}`}
+                {faculty1 === undefined || faculty1 === ""
+                  ? ``
+                  : `, ${faculty1}`}
               </h5>
               <h5 className="col-sm-6">Module Coordinator : {moduleco}</h5>
             </div>
