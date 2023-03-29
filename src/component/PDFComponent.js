@@ -53,11 +53,11 @@ function PDFComponent(props) {
         headersName.push(headers[i]);
         JSONdata.push(createData(d, i));
       }
-      if (headers[i].includes("Theory") || headers[i].includes("Lab")) {
-        comName.push(headers[i]);
-        comData.push(createComments(d, i));
-      }
-      if (headers[i].includes("Comments")) {
+      if (
+        headers[i].includes("Theory") ||
+        headers[i].includes("Lab") ||
+        headers[i].includes("Comments")
+      ) {
         comName.push(headers[i]);
         comData.push(createComments(d, i));
       }
