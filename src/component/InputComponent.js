@@ -17,6 +17,7 @@ export const InputComponent = () => {
 
   const moduleCoordinatorName = [
     { value: "Mrs. Kiran Waghmare", label: "Mrs. Kiran Waghmare" },
+    { value: "Mrs. Nisha Karolia", label: "Mrs. Nisha Karolia" },
     { value: "Mr. Vipul Tembulwar", label: "Mr. Vipul Tembulwar" },
     { value: "Ms. Shweta Bhere", label: "Ms. Shweta Bhere" },
     { value: "Mr. Malkeet Singh", label: "Mr. Malkeet Singh" },
@@ -32,13 +33,16 @@ export const InputComponent = () => {
     { value: "Database Technologies", label: "DBT" },
     { value: "Web Programming Technologies", label: "WPT" },
     { value: "Web Java Programming", label: "WJP" },
+    { value: "Microsoft DotNet", label: "DotNet" },
     { value: "Software Development Methodologies", label: "SDM" },
     { value: "Aptitude", label: "Aptitude" },
-    { value: "Communication", label: "Communication" },
+    { value: "Effective Communication", label: "Communication" },
   ];
 
   const facultyNameList = [
+    { value: "", label: "None" },
     { value: "Mrs. Kiran Waghmare", label: "Mrs. Kiran Waghmare" },
+    { value: "Mrs. Nisha Karolia", label: "Mrs. Nisha Karolia" },
     { value: "Mr. Shrinivas Kalewad", label: "Mr. Shrinivas Kalewad" },
     { value: "Mr. Sameer Dehadrai", label: "Mr. Sameer Dehadrai" },
     { value: "Mr. Abhishek Purohit", label: "Mr. Abhishek Purohit" },
@@ -46,7 +50,7 @@ export const InputComponent = () => {
     { value: "Mr. Vipul Tembulwar", label: "Mr. Vipul Tembulwar" },
     { value: "Mr. Mazrul Ansari", label: "Mr. Mazrul Ansari" },
     { value: "Mr. Malkeet Singh", label: "Mr. Malkeet Singh" },
-    { value: "Mr. Koustov Nandi", label: "Mr. Koustov Nandi" },
+    { value: "Mr. Koustav Nandi", label: "Mr. Koustav Nandi" },
     { value: "Dr. C P Johnson", label: "Dr. C P Johnson" },
   ];
 
