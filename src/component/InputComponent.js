@@ -24,6 +24,7 @@ export const InputComponent = () => {
     { value: "Mr. Aniket Takmare", label: "Mr. Aniket Takmare" },
     { value: "Mr. Aditya Kansana", label: "Mr. Aditya Kansana" },
     { value: "Mr. Shilbhushan Khanderao", label: "Mr. Shilbhushan Khanderao" },
+    { value: "Mr. Prashant Bhosale", label: "Mr. Prashant Bhosale" },
   ];
 
   const moduleNameList = [
