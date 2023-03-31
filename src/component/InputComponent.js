@@ -72,7 +72,7 @@ export const InputComponent = () => {
   return (
     <div className="container">
       <div className="text-center">
-        <h1>Generate Pie Chart</h1>
+        <h1>Feedback Generator</h1>
       </div>
       <br />
       <div>
