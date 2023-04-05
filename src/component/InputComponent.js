@@ -72,7 +72,9 @@ export const InputComponent = () => {
   return (
     <div className="container">
       <div className="text-center">
-        <h1>Feedback Generator</h1>
+
+        <h1>Feedback Genarator</h1>
+
       </div>
       <br />
       <div>
