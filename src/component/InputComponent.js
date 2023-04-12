@@ -3,6 +3,7 @@ import { useState } from "react";
 import PDFComponent from "./PDFComponent";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
+import Instructions from "./Instructions";
 
 //to get all required data from user
 export const InputComponent = () => {
@@ -71,6 +72,9 @@ export const InputComponent = () => {
 
   return (
     <div className="container">
+      <div style={{ textAlign: "end" }}>
+        <Instructions />
+      </div>
       <div className="text-center">
         <h1>Feedback Generator</h1>
       </div>
@@ -134,6 +138,7 @@ export const InputComponent = () => {
             <div className="col-sm-10">
               <input
                 type="file"
+                accept=".csv"
                 className="form-control"
                 id="file"
                 onChange={handleChange}
