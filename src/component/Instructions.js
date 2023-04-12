@@ -48,7 +48,7 @@ function Instructions() {
         </Popover>
       }
     >
-      <Button variant="success" className="m-2">
+      <Button variant="success" className="mx-3">
         Instructions
       </Button>
     </OverlayTrigger>
