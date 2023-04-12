@@ -1,17 +1,23 @@
 import React from "react";
+import logo from "./image/logo.png";
 
 function NavbarComponent() {
   return (
-    <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand">
+    <nav
+      className="navbar navbar-light"
+      style={{
+        background: `linear-gradient(180deg, rgba(33,133,218,1) 0%, rgba(255,255,255,1) 100%)`,
+        textAlign: "center",
+      }}
+    >
+      <a className="navbar-brand">
         <img
-          src="./image/C-DAClogo.png"
-          width="30"
-          height="30"
-          class="d-inline-block align-top"
-          alt=""
+          src={logo}
+          width="250"
+          height="250"
+          class="d-inline-block align-top m-1 img-fluid"
+          alt="logo"
         />
-        C-DAC Mumbai
       </a>
     </nav>
   );
