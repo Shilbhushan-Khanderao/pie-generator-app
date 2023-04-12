@@ -71,107 +71,109 @@ export const InputComponent = () => {
   };
 
   return (
-    <div className="container">
+    <div>
       <div style={{ textAlign: "end" }}>
         <Instructions />
       </div>
-      <div className="text-center">
-        <h1>Feedback Generator</h1>
-      </div>
-      <br />
-      <div>
-        <form>
-          <div className="form-group row m-1">
-            <label className="col-sm-2 col-form-label">Module Name</label>
-            <div className="dropdown col-sm-10">
-              <Select
-                options={moduleNameList}
-                onChange={(event) => setModuleName(event.value)}
-              />
-            </div>
-          </div>
-          <div className="form-group row m-1">
-            <label className="col-sm-2 col-form-label">Batch</label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control"
-                id="batch"
-                placeholder="Batch"
-                onChange={(event) => setBatch(event.target.value)}
-              />
-            </div>
-          </div>
-          <div className="form-group row m-1">
-            <label className="col-sm-2 col-form-label">Faculty Name</label>
-            <div className="col-sm-5">
-              <CreatableSelect
-                className="basic-multi-select"
-                classNamePrefix="select"
-                options={facultyNameList}
-                onChange={(event) => setFaculty(event.value)}
-              />
-            </div>
-            <div className="col-sm-5">
-              <CreatableSelect
-                placeholder="In case of two faculties"
-                className="basic-multi-select"
-                classNamePrefix="select"
-                options={facultyNameList}
-                onChange={(event) => setFaculty1(event.value)}
-              />
-            </div>
-          </div>
-          <div className="form-group row m-1">
-            <label className="col-sm-2 col-form-label">
-              Module Coordinater
-            </label>
-            <div className="col-sm-10">
-              <Select
-                options={moduleCoordinatorName}
-                onChange={(event) => setModuleco(event.value)}
-              />
-            </div>
-          </div>
-          <div className="form-group row m-1">
-            <label className="col-sm-2 col-form-label">Upload CSV File</label>
-            <div className="col-sm-10">
-              <input
-                type="file"
-                accept=".csv"
-                className="form-control"
-                id="file"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </form>
-        <div className="form-group text-center">
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={showDiv}
-            onDoubleClick={hideDiv}
-          >
-            Upload
-          </button>
+      <div className="container">
+        <div className="text-center">
+          <h1>Feedback Generator</h1>
         </div>
-      </div>
-      <div>
-        {show && (
-          <div className="row">
-            <div className="">
-              <PDFComponent
-                file={File}
-                moduleName={moduleName}
-                batch={batch}
-                faculty={faculty}
-                faculty1={faculty1}
-                moduleco={moduleco}
-              />
+        <br />
+        <div>
+          <form>
+            <div className="form-group row m-1">
+              <label className="col-sm-2 col-form-label">Module Name</label>
+              <div className="dropdown col-sm-10">
+                <Select
+                  options={moduleNameList}
+                  onChange={(event) => setModuleName(event.value)}
+                />
+              </div>
             </div>
+            <div className="form-group row m-1">
+              <label className="col-sm-2 col-form-label">Batch</label>
+              <div className="col-sm-10">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="batch"
+                  placeholder="Batch"
+                  onChange={(event) => setBatch(event.target.value)}
+                />
+              </div>
+            </div>
+            <div className="form-group row m-1">
+              <label className="col-sm-2 col-form-label">Faculty Name</label>
+              <div className="col-sm-5">
+                <CreatableSelect
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  options={facultyNameList}
+                  onChange={(event) => setFaculty(event.value)}
+                />
+              </div>
+              <div className="col-sm-5">
+                <CreatableSelect
+                  placeholder="In case of two faculties"
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  options={facultyNameList}
+                  onChange={(event) => setFaculty1(event.value)}
+                />
+              </div>
+            </div>
+            <div className="form-group row m-1">
+              <label className="col-sm-2 col-form-label">
+                Module Coordinater
+              </label>
+              <div className="col-sm-10">
+                <Select
+                  options={moduleCoordinatorName}
+                  onChange={(event) => setModuleco(event.value)}
+                />
+              </div>
+            </div>
+            <div className="form-group row m-1">
+              <label className="col-sm-2 col-form-label">Upload CSV File</label>
+              <div className="col-sm-10">
+                <input
+                  type="file"
+                  accept=".csv"
+                  className="form-control"
+                  id="file"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </form>
+          <div className="form-group text-center">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={showDiv}
+              onDoubleClick={hideDiv}
+            >
+              Upload
+            </button>
           </div>
-        )}
+        </div>
+        <div>
+          {show && (
+            <div className="row">
+              <div className="">
+                <PDFComponent
+                  file={File}
+                  moduleName={moduleName}
+                  batch={batch}
+                  faculty={faculty}
+                  faculty1={faculty1}
+                  moduleco={moduleco}
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
