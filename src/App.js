@@ -16,9 +16,8 @@ function App() {
         }}
       >
         <InputComponent></InputComponent>
+        <FooterComponent />
       </div>
-
-      <FooterComponent></FooterComponent>
     </div>
   );
 }

@@ -7,7 +7,7 @@ function NavbarComponent() {
       className="navbar navbar-light"
       style={{
         background: `linear-gradient(180deg, rgba(33,133,218,1) 0%, rgba(255,255,255,1) 100%)`,
-        textAlign: "center",
+        alignItems: "flex-start",
       }}
     >
       <a className="navbar-brand">

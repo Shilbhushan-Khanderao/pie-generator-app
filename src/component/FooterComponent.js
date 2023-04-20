@@ -6,10 +6,14 @@ function FooterComponent() {
       style={{
         background:
           "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(33,133,218,1) 100%)",
+        position: "fixed",
+        bottom: 0,
+        width: "100%",
+        textAlign: "center",
       }}
     >
-      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
-        <div class="col-md-6 d-flex align-items-center">
+      <footer class="d-flex flex-wrap justify-content-center py-3 border-top">
+        <div class=" ml-5 ">
           © Copyright 2023 - C-DAC Mumbai (Education & Training Team). All
           rights reserved.
         </div>
