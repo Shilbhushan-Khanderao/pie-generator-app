@@ -25,36 +25,36 @@ export const PieChartComponent = (props) => {
   //condition for giving page break
   if (name.includes("Explanation")) {
     explanationCount++;
-    explanationCount >= 3 ? (decision = true) : (decision = false);
+    explanationCount >= 2 ? (decision = true) : (decision = false);
   }
   //condition for giving page break, nested to check if explanation is present 1 or 2 times
   if (name.includes("Pace")) {
     paceCount++;
-    explanationCount >= 3
-      ? paceCount >= 3
+    explanationCount >= 2
+      ? paceCount >= 2
         ? (decision = true)
         : (decision = false)
-      : paceCount >= 2
+      : paceCount >= 1
       ? (decision = true)
       : (decision = false);
   }
   if (name.includes("Interaction")) {
     interactionCount++;
-    interactionCount >= 3 ? (decision = true) : (decision = false);
+    interactionCount >= 2 ? (decision = true) : (decision = false);
   }
   if (name.includes("Practical")) {
     practicalCount++;
-    explanationCount >= 3
-      ? practicalCount >= 3
+    explanationCount >= 2
+      ? practicalCount >= 2
         ? (decision = true)
         : (decision = false)
-      : practicalCount >= 2
+      : practicalCount >= 1
       ? (decision = true)
       : (decision = false);
   }
   if (name.includes("Overall")) {
     overallCount++;
-    overallCount >= 3 ? (decision = true) : (decision = false);
+    overallCount >= 2 ? (decision = true) : (decision = false);
   }
 
   console.log(explanationCount);
