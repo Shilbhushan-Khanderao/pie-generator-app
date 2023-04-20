@@ -26,7 +26,6 @@ function PDFComponent(props) {
   let faculty1 = props.faculty1;
   let moduleco = props.moduleco;
   let moduleName = props.moduleName;
-  console.log(faculty1);
 
   //converting csv data to JSON data by papaparse library and passing that data to createCount function for further operations
   const generateChart = () => {

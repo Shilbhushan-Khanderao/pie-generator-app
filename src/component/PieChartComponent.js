@@ -57,6 +57,11 @@ export const PieChartComponent = (props) => {
     overallCount >= 3 ? (decision = true) : (decision = false);
   }
 
+  console.log(explanationCount);
+  console.log(paceCount);
+  console.log(interactionCount);
+  console.log(practicalCount);
+  console.log(overallCount);
   const RADIAN = Math.PI / 180;
   //for label
   const renderCustomizedLabel = ({
