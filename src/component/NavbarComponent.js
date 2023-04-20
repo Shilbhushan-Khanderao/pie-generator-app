@@ -19,16 +19,6 @@ function NavbarComponent() {
           alt="logo"
         />
       </a>
-      <text
-        className="d-flex mx-3"
-        style={{
-          alignItems: "flex-start",
-          position: "relative",
-          alignItems: "end",
-        }}
-      >
-        by Shilbhushan Khanderao
-      </text>
     </nav>
   );
 }

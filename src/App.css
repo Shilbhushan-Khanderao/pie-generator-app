@@ -38,8 +38,9 @@
 }  */
 
 
-.app{
-  @media print {
-    font-family: "Times New Roman";
-  }
-}
+
+  /* @media print {
+    .app{
+      font-family: "Times New Roman";
+    }
+  } */

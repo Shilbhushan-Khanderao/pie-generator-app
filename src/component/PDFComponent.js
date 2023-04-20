@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Comments from "./Comments";
 import PieChartComponent from "./PieChartComponent";
 import Papa from "papaparse";
-import "./pdfCss.css";
 
 //processing of csv file, creating JSON data, generating JSON data with count
 function PDFComponent(props) {
