@@ -8,10 +8,11 @@ import {
 } from "recharts";
 
 //to plot piechart from given data
-export const PieChartComponent = ({ data, name }) => {
+export const PieChartComponent = ({ data, name, count }) => {
   //required data for piechart
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#D733FF"];
 
+  const shouldPageBreak = count % 2 === 1 ? true : false;
   const RADIAN = Math.PI / 180;
 
   // for label
@@ -41,7 +42,12 @@ export const PieChartComponent = ({ data, name }) => {
   };
 
   return (
-    <div className="container">
+    <div
+      className="container"
+      style={{
+        pageBreakAfter: shouldPageBreak ? "always" : "auto",
+      }}
+    >
       <div className="row d-flex justify-content-center text-center">
         <div className="col-md-8 pdf">
           <br />
