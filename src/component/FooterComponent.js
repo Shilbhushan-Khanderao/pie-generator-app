@@ -12,8 +12,8 @@ function FooterComponent() {
         textAlign: "center",
       }}
     >
-      <footer class="d-flex flex-wrap justify-content-center py-3 border-top">
-        <div class=" ml-5 ">
+      <footer className="d-flex flex-wrap justify-content-center py-3 border-top">
+        <div className=" ml-5 ">
           © Copyright 2023 - C-DAC Mumbai (Education & Training Team). All
           rights reserved.
         </div>
