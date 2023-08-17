@@ -11,14 +11,17 @@ export const InputComponent = () => {
   const [File, setFile] = useState();
   const [show, setShow] = useState(false);
   const [moduleName, setModuleName] = useState();
-  const [batch, setBatch] = useState();
+  const [batchMonth, setBatchMonth] = useState([]);
+  const [batchYear, setBatchYear] = useState([]);
   const [faculty, setFaculty] = useState();
   const [faculty1, setFaculty1] = useState();
   const [moduleco, setModuleco] = useState();
 
+  const batchYears = generateYears();
+
+  //list of module coordinators
   const moduleCoordinatorName = [
     { value: "Mrs. Kiran Waghmare", label: "Mrs. Kiran Waghmare" },
-    { value: "Mrs. Nisha Karolia", label: "Mrs. Nisha Karolia" },
     { value: "Mr. Vipul Tembulwar", label: "Mr. Vipul Tembulwar" },
     { value: "Ms. Shweta Bhere", label: "Ms. Shweta Bhere" },
     { value: "Mr. Malkeet Singh", label: "Mr. Malkeet Singh" },
@@ -26,8 +29,10 @@ export const InputComponent = () => {
     { value: "Mr. Aditya Kansana", label: "Mr. Aditya Kansana" },
     { value: "Mr. Shilbhushan Khanderao", label: "Mr. Shilbhushan Khanderao" },
     { value: "Mr. Prashant Bhosale", label: "Mr. Prashant Bhosale" },
+    { value: "Mr. Manoj More", label: "Mr. Manoj More" },
   ];
 
+  //Overall Modules
   const moduleNameList = [
     { value: "Concept of Programming & Operating Systems", label: "CPOS" },
     { value: "Object Oriented Programming with Java", label: "OOPJ" },
@@ -41,20 +46,49 @@ export const InputComponent = () => {
     { value: "Effective Communication", label: "Communication" },
   ];
 
+  //for select of faculty name or can create new also directly
   const facultyNameList = [
     { value: "", label: "None" },
     { value: "Mrs. Kiran Waghmare", label: "Mrs. Kiran Waghmare" },
-    { value: "Mrs. Nisha Karolia", label: "Mrs. Nisha Karolia" },
     { value: "Mr. Shrinivas Kalewad", label: "Mr. Shrinivas Kalewad" },
+    { value: "Mr. Shivnath Kumar", label: "Mr. Shivnath Kumar" },
+    { value: "Mr. Sandeep Kulange", label: "Mr. Sandeep Kulange" },
     { value: "Mr. Sameer Dehadrai", label: "Mr. Sameer Dehadrai" },
     { value: "Mr. Abhishek Purohit", label: "Mr. Abhishek Purohit" },
+    { value: "Mr. Santosh Mondal", label: "Mr. Santosh Mondal" },
     { value: "Mr. Vikram Sulakhe", label: "Mr. Vikram Sulakhe" },
     { value: "Mr. Vipul Tembulwar", label: "Mr. Vipul Tembulwar" },
     { value: "Mr. Mazrul Ansari", label: "Mr. Mazrul Ansari" },
     { value: "Mr. Malkeet Singh", label: "Mr. Malkeet Singh" },
     { value: "Mr. Koustav Nandi", label: "Mr. Koustav Nandi" },
     { value: "Dr. C P Johnson", label: "Dr. C P Johnson" },
+    { value: "Mr. Aditya Kansana", label: "Mr. Aditya Kansana" },
   ];
+
+  //for select batch months
+  const batchMonths = [
+    { value: "January", label: "January" },
+    { value: "February", label: "February" },
+    { value: "March", label: "March" },
+    { value: "April", label: "April" },
+    { value: "May", label: "May" },
+    { value: "June", label: "June" },
+    { value: "July", label: "July" },
+    { value: "August", label: "August" },
+    { value: "September", label: "September" },
+    { value: "October", label: "October" },
+    { value: "November", label: "November" },
+    { value: "December", label: "December" },
+  ];
+
+  //to genarate years for selection of years in input
+  function generateYears() {
+    const currentYear = new Date().getFullYear();
+    return Array.from({ length: 30 }, (_, index) => {
+      const year = currentYear - index;
+      return { value: year.toString(), label: year.toString() };
+    });
+  }
 
   //to set state of file uploaded
   function handleChange(e) {
@@ -80,7 +114,7 @@ export const InputComponent = () => {
           <h1>Feedback Generator</h1>
         </div>
         <br />
-        <div>
+        <div className="col-md-10 mx-auto">
           <form>
             <div className="form-group row m-1">
               <label className="col-sm-2 col-form-label">Module Name</label>
@@ -93,13 +127,18 @@ export const InputComponent = () => {
             </div>
             <div className="form-group row m-1">
               <label className="col-sm-2 col-form-label">Batch</label>
-              <div className="col-sm-10">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="batch"
-                  placeholder="Batch"
-                  onChange={(event) => setBatch(event.target.value)}
+              <div className="col-sm-5">
+                <Select
+                  placeholder="Month"
+                  options={batchMonths}
+                  onChange={(event) => setBatchMonth(event.value)}
+                />
+              </div>
+              <div className="col-sm-5">
+                <Select
+                  placeholder="Year"
+                  options={batchYears}
+                  onChange={(event) => setBatchYear(event.value)}
                 />
               </div>
             </div>
@@ -165,7 +204,8 @@ export const InputComponent = () => {
                 <PDFComponent
                   file={File}
                   moduleName={moduleName}
-                  batch={batch}
+                  batchMonth={batchMonth}
+                  batchYear={batchYear}
                   faculty={faculty}
                   faculty1={faculty1}
                   moduleco={moduleco}

@@ -3,44 +3,42 @@ import Comments from "./Comments";
 import PieChartComponent from "./PieChartComponent";
 import Papa from "papaparse";
 
-//processing of csv file, creating JSON data, generating JSON data with count
-function PDFComponent(props) {
-  //state to pass along component as props
-  const [jsonData, setJsonData] = useState([]);
-  const [hName, setHName] = useState([]);
-  const [comdata, setComData] = useState([]);
-  const [comname, setComName] = useState([]);
-  const [show, setShow] = useState(false);
+function PDFComponent({
+  file,
+  batchMonth,
+  batchYear,
+  faculty,
+  faculty1,
+  moduleco,
+  moduleName,
+}) {
+  const [chartData, setChartData] = useState([]);
+  const [chartHeaders, setChartHeaders] = useState([]);
+  const [commentData, setCommentData] = useState([]);
+  const [commentHeaders, setCommentHeaders] = useState([]);
+  const [showData, setShowData] = useState(false);
 
-  //arrays to temporarily store data
-  let headers = [];
-  let JSONdata = [];
-  let headersName = [];
-  let comName = [];
-  let comData = [];
-
-  //input data from form elements taken from props from inputComponent
-  let file = props.file;
-  let batch = props.batch;
-  let faculty = props.faculty;
-  let faculty1 = props.faculty1;
-  let moduleco = props.moduleco;
-  let moduleName = props.moduleName;
-
-  //converting csv data to JSON data by papaparse library and passing that data to createCount function for further operations
   const generateChart = () => {
-    setShow(true);
+    setShowData(true);
     Papa.parse(file, {
-      complete: function (results) {
-        // console.log(results.data);
-        createCount(results.data);
+      complete: ({ data }) => {
+        const { chartHeaders, chartData, commentHeaders, commentData } =
+          processCsvData(data);
+        setChartHeaders(chartHeaders);
+        setChartData(chartData);
+        setCommentHeaders(commentHeaders);
+        setCommentData(commentData);
       },
     });
   };
 
-  //JSON data converted to count from coloumns of data and calling createData and createComments function
-  function createCount(d) {
-    headers = d[0];
+  const processCsvData = (csvData) => {
+    const headers = csvData[0];
+    const chartHeaders = [];
+    const chartData = [];
+    const commentHeaders = [];
+    const commentData = [];
+
     for (let i = 0; i < headers.length; i++) {
       if (
         headers[i].includes("Explanation") ||
@@ -49,141 +47,76 @@ function PDFComponent(props) {
         headers[i].includes("Practical") ||
         headers[i].includes("Overall")
       ) {
-        headersName.push(headers[i]);
-        JSONdata.push(createData(d, i));
+        chartHeaders.push(headers[i]);
+        chartData.push(createChartData(csvData, i));
       }
       if (
         headers[i].includes("Theory") ||
         headers[i].includes("Lab") ||
-        headers[i].includes("Comments")
+        headers[i].includes("Comments") ||
+        headers[i].includes("comments")
       ) {
-        comName.push(headers[i]);
-        comData.push(createComments(d, i));
+        commentHeaders.push(headers[i]);
+        commentData.push(extractComments(csvData, i));
       }
     }
-    setHName(headersName);
-    setJsonData(JSONdata);
-    setComName(comName);
-    setComData(comData);
-  }
 
-  //count is created for each coloumns with parameters and there occurence
-  function createData(d, hi) {
-    var gCount,
-      vgCount,
-      eCount,
-      aCount,
-      pCount,
-      vsCount,
-      sCount,
-      nCount,
-      fCount,
-      vfCount;
-    gCount =
-      vgCount =
-      eCount =
-      aCount =
-      pCount =
-      vsCount =
-      sCount =
-      nCount =
-      fCount =
-      vfCount =
-        0;
+    return { chartHeaders, chartData, commentHeaders, commentData };
+  };
 
-    let arr = [];
-    let generated = [];
+  const createChartData = (csvData, columnIndex) => {
+    const feedbackCounts = {
+      Good: 0,
+      "Very Good": 0,
+      Excellent: 0,
+      Average: 0,
+      Poor: 0,
+      Slow: 0,
+      "Very Slow": 0,
+      Normal: 0,
+      Fast: 0,
+      "Very Fast": 0,
+    };
 
-    for (let i = 0; i < d.length; i++) {
-      arr.push(d[i][hi]);
-
-      if (arr[i] === "Good") gCount++;
-      if (arr[i] === "Very Good") vgCount++;
-      if (arr[i] === "Excellent") eCount++;
-      if (arr[i] === "Average") aCount++;
-      if (arr[i] === "Poor") pCount++;
-      if (arr[i] === "Very Slow") vsCount++;
-      if (arr[i] === "Slow") sCount++;
-      if (arr[i] === "Normal") nCount++;
-      if (arr[i] === "Fast") fCount++;
-      if (arr[i] === "Very Fast") vfCount++;
-      if (i === d.length - 1) {
-        if (eCount > 0) {
-          generated.push({ fb: "Excellent", count: eCount });
-        }
-        if (vgCount > 0) {
-          generated.push({ fb: "Very Good", count: vgCount });
-        }
-        if (gCount > 0) {
-          generated.push({ fb: "Good", count: gCount });
-        }
-        if (aCount > 0) {
-          generated.push({ fb: "Average", count: aCount });
-        }
-        if (pCount > 0) {
-          generated.push({ fb: "Poor", count: pCount });
-        }
-        if (vfCount > 0) {
-          generated.push({ fb: "Very Fast", count: vfCount });
-        }
-        if (fCount > 0) {
-          generated.push({ fb: "Fast", count: fCount });
-        }
-        if (nCount > 0) {
-          generated.push({ fb: "Normal", count: nCount });
-        }
-        if (sCount > 0) {
-          generated.push({ fb: "Slow", count: sCount });
-        }
-        if (vsCount > 0) {
-          generated.push({ fb: "Very Slow", count: vsCount });
-        }
+    for (let i = 0; i < csvData.length; i++) {
+      const feedback = csvData[i][columnIndex];
+      if (feedbackCounts.hasOwnProperty(feedback)) {
+        feedbackCounts[feedback]++;
       }
     }
-    // console.log(generated);
-    return generated;
-  }
 
-  //to read all the comments from coloumns and push to array by excluding some values
-  function createComments(d, hi) {
-    let arr = [];
-    let generated = [];
-    for (let i = 0; i < d.length; i++) {
-      arr.push(d[i][hi]);
+    const generatedChartData = Object.entries(feedbackCounts)
+      .filter(([feedback, count]) => count > 0)
+      .map(([feedback, count]) => ({ feedback, count }));
 
-      if (
-        arr[i] !== "" &&
-        arr[i] !== " " &&
-        arr[i] !== "No Comments" &&
-        arr[i] !== "NO Comments" &&
-        arr[i] !== "NO comments" &&
-        arr[i] !== "No comments" &&
-        arr[i] !== "Nothing" &&
-        arr[i] !== "No" &&
-        arr[i] !== "NA" &&
-        arr[i] !== "Na" &&
-        arr[i] !== "na" &&
-        arr[i] !== "no" &&
-        arr[i] !== "." &&
-        arr[i] !== undefined &&
-        onlyLettersSpacesDots(arr[i])
-      ) {
-        generated.push(arr[i]);
-      }
-    }
-    // console.log(generated);
-    return generated;
-  }
+    return generatedChartData;
+  };
 
-  //to exclude the mentioned elements if present in string
-  function onlyLettersSpacesDots(str) {
-    return /^[a-zA-Z\s.,]+$/.test(str);
-  }
+  const extractComments = (csvData, columnIndex) => {
+    const extractedComments = csvData
+      .map((row) => row[columnIndex])
+      .filter(
+        (comment) =>
+          comment &&
+          comment.trim() &&
+          comment.trim().toLowerCase() !== "no comments" &&
+          comment.trim().toLowerCase() !== "na" &&
+          comment.trim().toLowerCase() !== "nothing" &&
+          comment.trim().toLowerCase() !== "no" &&
+          comment.trim().toLowerCase() !== "ok" &&
+          comment !== "." &&
+          comment !== "-" &&
+          comment !== "--" &&
+          comment !== ".." &&
+          comment !== undefined
+      );
 
-  //To print the entire generated piechart and comments data from html
-  const Print = () => {
-    let printContents = document.getElementById("pdf").innerHTML;
-    let originalContents = document.body.innerHTML;
+    return extractedComments;
+  };
+
+  const printPage = () => {
+    const printContents = document.getElementById("pdf").innerHTML;
+    const originalContents = document.body.innerHTML;
     document.body.innerHTML = printContents;
     window.print();
     document.body.innerHTML = originalContents;
@@ -202,21 +135,23 @@ function PDFComponent(props) {
           </button>
         </div>
         <div className="col-md-4 justify-content-end">
-          <button className="btn btn-success text-right" onClick={Print}>
+          <button className="btn btn-success text-right" onClick={printPage}>
             Download
           </button>
         </div>
       </div>
       <div id="pdf" className="container">
         <div id="titles">
-          {show && (
+          {showData && (
             <div className="row m-1">
               <h2 className="text-center">
                 PG-DAC Module Feedback for {moduleName}
               </h2>
               <br />
               <h5 className="col-sm-6">Module Name : {moduleName}</h5>
-              <h5 className="col-sm-6">Batch : {batch}</h5>
+              <h5 className="col-sm-6">
+                Batch : {batchMonth} {batchYear}
+              </h5>
               <h5 className="col-sm-6">
                 Faculty Name : {faculty}
                 {faculty1 === undefined || faculty1 === ""
@@ -229,24 +164,27 @@ function PDFComponent(props) {
         </div>
         <hr />
         <div id="piechart">
-          {show &&
-            jsonData.map(function (element, index) {
+          {showData &&
+            chartData.map((data, index) => {
               return (
                 <div key={index}>
                   <PieChartComponent
-                    data={jsonData[index]}
-                    name={hName[index]}
+                    data={chartData[index]}
+                    name={chartHeaders[index]}
                   />
                 </div>
               );
             })}
         </div>
         <div id="comment">
-          {show &&
-            comdata.map(function (element, index) {
+          {showData &&
+            commentData.map((data, index) => {
               return (
                 <div key={index} className="container col-md-10">
-                  <Comments comdata={comdata[index]} comname={comname[index]} />
+                  <Comments
+                    comdata={commentData[index]}
+                    comname={commentHeaders[index]}
+                  />
                 </div>
               );
             })}
@@ -255,4 +193,5 @@ function PDFComponent(props) {
     </div>
   );
 }
+
 export default PDFComponent;

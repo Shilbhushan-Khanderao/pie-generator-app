@@ -1,33 +1,30 @@
 import React from "react";
 
 //to plot comments
-function Comments(props) {
-  //assigning data from props
-  const comData = props.comdata;
-  const comName = props.comname;
+function Comments({ comdata, comname }) {
   //to check for printing condition for page break
-  const ifPresent =
-    comName.includes("Theory") ||
-    comName.includes("Lab") ||
-    comName.includes("Comments")
-      ? true
-      : false;
+  const shouldPageBreak = comname.toLowerCase().includes("comments")
+    ? true
+    : false;
   return (
     <div
       className="container"
-      style={{ pageBreakBefore: ifPresent ? "always" : "auto" }}
+      style={{ pageBreakBefore: shouldPageBreak ? "always" : "auto" }}
     >
       <br />
       <h4 className="text-center" style={{ textAlign: "center" }}>
-        {comName}
+        {comname}
       </h4>
       <hr />
       <ul style={{ margin: 5 }}>
-        {comData.map((entry, index) => (
-          <li key={index} className="text-left">
-            {comData[index]}
-          </li>
-        ))}
+        {comdata.map(
+          (entry, index) =>
+            index !== 0 && (
+              <li key={index} className="text-left">
+                {comdata[index]}
+              </li>
+            )
+        )}
       </ul>
     </div>
   );
