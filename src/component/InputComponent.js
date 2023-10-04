@@ -34,7 +34,9 @@ export const InputComponent = () => {
 
   //Overall Modules
   const moduleNameList = [
-    { value: "Concept of Programming & Operating Systems", label: "CPOS" },
+    { value: "Logic Building Session", label: "LBS" },
+    { value: "Operating Systems", label: "OS" },
+    { value: "C++", label: "CPP" },
     { value: "Object Oriented Programming with Java", label: "OOPJ" },
     { value: "Algorithm & Data Structures", label: "ADS" },
     { value: "Database Technologies", label: "DBT" },
