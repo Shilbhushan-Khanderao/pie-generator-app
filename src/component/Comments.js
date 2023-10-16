@@ -7,10 +7,7 @@ function Comments({ comdata, comname }) {
     ? true
     : false;
   return (
-    <div
-      className="container"
-      style={{ pageBreakBefore: shouldPageBreak ? "always" : "auto" }}
-    >
+    <div style={{ pageBreakBefore: shouldPageBreak ? "always" : "auto" }}>
       <br />
       <h4 className="text-center" style={{ textAlign: "center" }}>
         {comname}
