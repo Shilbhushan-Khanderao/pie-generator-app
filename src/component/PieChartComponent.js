@@ -8,11 +8,10 @@ import {
 } from "recharts";
 
 //to plot piechart from given data
-export const PieChartComponent = ({ data, name, count }) => {
+export const PieChartComponent = ({ data, name }) => {
   //required data for piechart
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#D733FF"];
 
-  const shouldPageBreak = count % 2 === 1 ? true : false;
   const RADIAN = Math.PI / 180;
 
   // for label
