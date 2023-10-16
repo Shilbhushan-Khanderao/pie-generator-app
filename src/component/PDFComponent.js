@@ -148,17 +148,17 @@ function PDFComponent({
                 PG-DAC Module Feedback for {moduleName}
               </h2>
               <br />
-              <h5 className="col-sm-6">Module Name : {moduleName}</h5>
-              <h5 className="col-sm-6">
+              <h5 className="col-md-6">Module Name : {moduleName}</h5>
+              <h5 className="col-md-6">
                 Batch : {batchMonth} {batchYear}
               </h5>
-              <h5 className="col-sm-6">
+              <h5 className="col-md-6">
                 Faculty Name : {faculty}
                 {faculty1 === undefined || faculty1 === ""
                   ? ``
                   : `, ${faculty1}`}
               </h5>
-              <h5 className="col-sm-6">Module Coordinator : {moduleco}</h5>
+              <h5 className="col-md-6">Module Coordinator : {moduleco}</h5>
             </div>
           )}
         </div>
@@ -177,7 +177,7 @@ function PDFComponent({
               );
             })}
         </div>
-        <div id="comment">
+        <div id="comment" className="row">
           {showData &&
             commentData.map((data, index) => {
               return (

@@ -43,12 +43,11 @@ export const PieChartComponent = ({ data, name, count }) => {
 
   return (
     <div
-      className="container"
       style={{
         pageBreakAfter: shouldPageBreak ? "always" : "auto",
       }}
     >
-      <div className="row d-flex justify-content-center text-center">
+      <div className="row justify-content-center text-center">
         <div className="col-md-8 pdf">
           <br />
           <h4 style={{ textAlign: "center" }}>{name}</h4>

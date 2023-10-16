@@ -36,7 +36,7 @@ export const InputComponent = () => {
   const moduleNameList = [
     { value: "Logic Building Session", label: "LBS" },
     { value: "Operating Systems", label: "OS" },
-    { value: "C++", label: "CPP" },
+    { value: "C++ Programming", label: "CPPP" },
     { value: "Object Oriented Programming with Java", label: "OOPJ" },
     { value: "Algorithm & Data Structures", label: "ADS" },
     { value: "Database Technologies", label: "DBT" },
