@@ -14,7 +14,7 @@ export const InputComponent = () => {
   const [batchMonth, setBatchMonth] = useState([]);
   const [batchYear, setBatchYear] = useState([]);
   const [faculty, setFaculty] = useState();
-  const [faculty1, setFaculty1] = useState();
+  // const [faculty1, setFaculty1] = useState();
   const [moduleco, setModuleco] = useState();
 
   const batchYears = generateYears();
@@ -154,7 +154,7 @@ export const InputComponent = () => {
                   onChange={(event) => setFaculty(event.value)}
                 />
               </div>
-              <div className="col-sm-5">
+              {/* <div className="col-sm-5">
                 <CreatableSelect
                   placeholder="In case of two faculties"
                   className="basic-multi-select"
@@ -162,7 +162,7 @@ export const InputComponent = () => {
                   options={facultyNameList}
                   onChange={(event) => setFaculty1(event.value)}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="form-group row m-1">
               <label className="col-sm-2 col-form-label">
@@ -209,7 +209,7 @@ export const InputComponent = () => {
                   batchMonth={batchMonth}
                   batchYear={batchYear}
                   faculty={faculty}
-                  faculty1={faculty1}
+                  // faculty1={faculty1}
                   moduleco={moduleco}
                 />
               </div>

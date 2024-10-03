@@ -8,7 +8,7 @@ function PDFComponent({
   batchMonth,
   batchYear,
   faculty,
-  faculty1,
+  // faculty1,
   moduleco,
   moduleName,
 }) {
@@ -17,6 +17,7 @@ function PDFComponent({
   const [commentData, setCommentData] = useState([]);
   const [commentHeaders, setCommentHeaders] = useState([]);
   const [showData, setShowData] = useState(false);
+  const [totalFeedback, setTotalFeedback] = useState("");
 
   const generateChart = () => {
     setShowData(true);
@@ -77,6 +78,8 @@ function PDFComponent({
       Fast: 0,
       "Very Fast": 0,
     };
+
+    setTotalFeedback(csvData.length);
 
     for (let i = 0; i < csvData.length; i++) {
       const feedback = csvData[i][columnIndex];
@@ -154,11 +157,14 @@ function PDFComponent({
               </h5>
               <h5 className="col-md-6">
                 Faculty Name : {faculty}
-                {faculty1 === undefined || faculty1 === ""
+                {/* {faculty1 === undefined || faculty1 === ""
                   ? ``
-                  : `, ${faculty1}`}
+                  : `, ${faculty1}`} */}
               </h5>
               <h5 className="col-md-6">Module Coordinator : {moduleco}</h5>
+              <h5 className="col-md-6">
+                Total Feedback Count : {totalFeedback}
+              </h5>
             </div>
           )}
         </div>

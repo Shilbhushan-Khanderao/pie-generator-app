@@ -42,9 +42,7 @@ export const PieChartComponent = ({ data, name }) => {
 
   return (
     <div
-      style={{
-        pageBreakAfter: shouldPageBreak ? "always" : "auto",
-      }}
+     
     >
       <div className="row justify-content-center text-center">
         <div className="col-md-8 pdf">
