@@ -146,7 +146,7 @@ export const InputComponent = () => {
             </div>
             <div className="form-group row m-1">
               <label className="col-sm-2 col-form-label">Faculty Name</label>
-              <div className="col-sm-5">
+              <div className="col-sm-10">
                 <CreatableSelect
                   className="basic-multi-select"
                   classNamePrefix="select"
