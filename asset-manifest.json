@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/pie-generator-app/static/css/main.89a8f6c9.css",
-    "main.js": "/pie-generator-app/static/js/main.62a5b7ee.js",
+    "main.js": "/pie-generator-app/static/js/main.ffbcc83e.js",
     "static/js/787.8322ec68.chunk.js": "/pie-generator-app/static/js/787.8322ec68.chunk.js",
     "static/media/logo.png": "/pie-generator-app/static/media/logo.55f2ed192e4c1648c738.png",
     "index.html": "/pie-generator-app/index.html",
     "main.89a8f6c9.css.map": "/pie-generator-app/static/css/main.89a8f6c9.css.map",
-    "main.62a5b7ee.js.map": "/pie-generator-app/static/js/main.62a5b7ee.js.map",
+    "main.ffbcc83e.js.map": "/pie-generator-app/static/js/main.ffbcc83e.js.map",
     "787.8322ec68.chunk.js.map": "/pie-generator-app/static/js/787.8322ec68.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.89a8f6c9.css",
-    "static/js/main.62a5b7ee.js"
+    "static/js/main.ffbcc83e.js"
   ]
 }
