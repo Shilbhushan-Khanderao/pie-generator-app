@@ -177,6 +177,7 @@ function PDFComponent({
                   <PieChartComponent
                     data={chartData[index]}
                     name={chartHeaders[index]}
+                    count={index}
                   />
                 </div>
               );
