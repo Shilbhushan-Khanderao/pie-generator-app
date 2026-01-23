@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/pie-generator-app/static/css/main.89a8f6c9.css",
-    "main.js": "/pie-generator-app/static/js/main.ffbcc83e.js",
-    "static/js/787.8322ec68.chunk.js": "/pie-generator-app/static/js/787.8322ec68.chunk.js",
+    "main.css": "/pie-generator-app/static/css/main.a0a1baeb.css",
+    "main.js": "/pie-generator-app/static/js/main.f23fcd42.js",
+    "static/js/453.ca7ddda7.chunk.js": "/pie-generator-app/static/js/453.ca7ddda7.chunk.js",
     "static/media/logo.png": "/pie-generator-app/static/media/logo.55f2ed192e4c1648c738.png",
     "index.html": "/pie-generator-app/index.html",
-    "main.89a8f6c9.css.map": "/pie-generator-app/static/css/main.89a8f6c9.css.map",
-    "main.ffbcc83e.js.map": "/pie-generator-app/static/js/main.ffbcc83e.js.map",
-    "787.8322ec68.chunk.js.map": "/pie-generator-app/static/js/787.8322ec68.chunk.js.map"
+    "main.a0a1baeb.css.map": "/pie-generator-app/static/css/main.a0a1baeb.css.map",
+    "main.f23fcd42.js.map": "/pie-generator-app/static/js/main.f23fcd42.js.map",
+    "453.ca7ddda7.chunk.js.map": "/pie-generator-app/static/js/453.ca7ddda7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.89a8f6c9.css",
-    "static/js/main.ffbcc83e.js"
+    "static/css/main.a0a1baeb.css",
+    "static/js/main.f23fcd42.js"
   ]
 }
