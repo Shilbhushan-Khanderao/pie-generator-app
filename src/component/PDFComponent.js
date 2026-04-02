@@ -55,7 +55,8 @@ function PDFComponent({
         headers[i].includes("Theory") ||
         headers[i].includes("Lab") ||
         headers[i].includes("Comments") ||
-        headers[i].includes("comments")
+        headers[i].includes("comments") ||
+        headers[i].includes("Remarks")
       ) {
         commentHeaders.push(headers[i]);
         commentData.push(extractComments(csvData, i));

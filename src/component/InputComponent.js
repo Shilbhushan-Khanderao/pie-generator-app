@@ -21,7 +21,7 @@ export const InputComponent = () => {
 
   //list of module coordinators
   const moduleCoordinatorName = [
-    { value: "Mrs. Kiran Waghmare", label: "Mrs. Kiran Waghmare" },
+    { value: "Dr. Kiran Waghmare", label: "Dr. Kiran Waghmare" },
     { value: "Mr. Vipul Tembulwar", label: "Mr. Vipul Tembulwar" },
     { value: "Ms. Shweta Bhere", label: "Ms. Shweta Bhere" },
     { value: "Mr. Malkeet Singh", label: "Mr. Malkeet Singh" },
@@ -30,6 +30,7 @@ export const InputComponent = () => {
     { value: "Mr. Shilbhushan Khanderao", label: "Mr. Shilbhushan Khanderao" },
     { value: "Mr. Prashant Bhosale", label: "Mr. Prashant Bhosale" },
     { value: "Mr. Manoj More", label: "Mr. Manoj More" },
+    { value: "Mr. Shivraj Singh", label: "Mr. Shivraj Singh" },
   ];
 
   //Overall Modules
@@ -46,12 +47,20 @@ export const InputComponent = () => {
     { value: "Software Development Methodologies", label: "SDM" },
     { value: "Aptitude", label: "Aptitude" },
     { value: "Effective Communication", label: "Communication" },
+    { value: "Fundamentals of AI & Mathematics for AI", label: "FAI & MAI" },
+    { value: "Advanced Programming for AI(Java Programming)", label: "APAI(Java)" },
+    { value: "Advanced Programming for AI(Advanced Programming using Python)", label: "APAI(Python)" },
+    { value: "Practical Machine Learning", label: "PML" },
+    { value: "Data Analytics", label: "Data Analytics" },
+    { value: "Deep Neural Networks", label: "DNN" },
+    { value: "Natural Language Processing & Computer Vision", label: "NLP & CV" },
+    { value: "AI Compute Platforms, Applications & Trends", label: "AI & Trends" },
   ];
 
   //for select of faculty name or can create new also directly
   const facultyNameList = [
     { value: "", label: "None" },
-    { value: "Mrs. Kiran Waghmare", label: "Mrs. Kiran Waghmare" },
+    { value: "Dr. Kiran Waghmare", label: "Dr. Kiran Waghmare" },
     { value: "Mr. Shrinivas Kalewad", label: "Mr. Shrinivas Kalewad" },
     { value: "Mr. Shivnath Kumar", label: "Mr. Shivnath Kumar" },
     { value: "Mr. Sandeep Kulange", label: "Mr. Sandeep Kulange" },
@@ -65,6 +74,9 @@ export const InputComponent = () => {
     { value: "Mr. Koustav Nandi", label: "Mr. Koustav Nandi" },
     { value: "Dr. C P Johnson", label: "Dr. C P Johnson" },
     { value: "Mr. Aditya Kansana", label: "Mr. Aditya Kansana" },
+    { value: "Mr. Shilbhushan Khanderao", label: "Mr. Shilbhushan Khanderao" },
+    { value: "Mr. Prakash Pimpale", label: "Mr. Prakash Pimpale" },
+    { value: "Mr. Chetan Ahirrao", label: "Mr. Chetan Ahirrao" },
   ];
 
   //for select batch months
