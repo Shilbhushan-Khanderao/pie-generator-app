@@ -6,11 +6,21 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { feedbackColors, reportConfig } from "../config/reportConfig";
 
 //to plot piechart from given data
-export const PieChartComponent = ({ data, name, count }) => {
+export const PieChartComponent = ({
+  data,
+  name,
+  count,
+  animated = true,
+  fullWidth = false,
+}) => {
   //required data for piechart
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#D733FF"];
+  const FALLBACK_COLORS = reportConfig.chartColors;
+  const getColor = (feedbackValue, fallbackIndex) =>
+    feedbackColors[feedbackValue?.toLowerCase()] ||
+    FALLBACK_COLORS[fallbackIndex % FALLBACK_COLORS.length];
   const shouldPageBreak = count % 2 === 1 ? true : false;
 
   const RADIAN = Math.PI / 180;
@@ -44,7 +54,7 @@ export const PieChartComponent = ({ data, name, count }) => {
   return (
     <div style={{ pageBreakAfter: shouldPageBreak ? "always" : "auto" }}>
       <div className="row justify-content-center text-center">
-        <div className="col-md-8 pdf">
+        <div className={fullWidth ? "col-12 pdf" : "col-md-8 pdf"}>
           <br />
           <h4 style={{ textAlign: "center" }}>{name}</h4>
 
@@ -65,7 +75,7 @@ export const PieChartComponent = ({ data, name, count }) => {
                   cy="50%"
                   labelLine={true}
                   label={renderCustomizedLabel}
-                  isAnimationActive={true}
+                  isAnimationActive={animated}
                   outerRadius={130}
                   dataKey="count"
                   nameKey="feedback"
@@ -73,7 +83,7 @@ export const PieChartComponent = ({ data, name, count }) => {
                   {data.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
+                      fill={getColor(entry.feedback, index)}
                     />
                   ))}
                 </Pie>

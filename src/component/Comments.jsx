@@ -14,14 +14,11 @@ function Comments({ comdata, comname }) {
       </h4>
       <hr />
       <ul style={{ margin: 5 }}>
-        {comdata.map(
-          (entry, index) =>
-            index !== 0 && (
-              <li key={index} className="text-left">
-                {comdata[index]}
-              </li>
-            )
-        )}
+        {comdata.map((entry, index) => (
+          <li key={index} className="text-left">
+            {entry}
+          </li>
+        ))}
       </ul>
     </div>
   );

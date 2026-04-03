@@ -11,7 +11,8 @@ function App() {
         className="App"
         style={{
           backgroundSize: "cover",
-          height: "100vh",
+          minHeight: "calc(100vh - 64px)",
+          paddingBottom: "70px",
           color: "#000000",
         }}
       >

@@ -219,9 +219,9 @@ This component replaces the current "Upload → Generate Chart" blind workflow.
 │  │ Explanation (Theory) │ ✓ Pie Chart  │ [Pie Chart▼] │ │
 │  │ Pace of Teaching     │ ✓ Pie Chart  │ [Pie Chart▼] │ │
 │  │ Overall Satisfaction │ ✓ Pie Chart  │ [Pie Chart▼] │ │
-│  │ Theory Suggestions   │ ✓ Comment    │ [Comment   ▼]│ │
-│  │ Lab Suggestions      │ ✓ Comment    │ [Comment   ▼]│ │
-│  │ Student Name         │ ⚠ Unknown   │ [Ignore    ▼]│ │
+│  │ Theory Suggestions   │ ✓ Comment    │ [Comment  ▼] │ │
+│  │ Lab Suggestions      │ ✓ Comment    │ [Comment  ▼] │ │
+│  │ Student Name         │ ⚠ Unknown    │ [Ignore   ▼] | │
 │  └──────────────────────┴──────────────┴──────────────┘ │
 │                                                         │
 │  [Expand: Edit feedback vocabulary for Pie Chart cols]  │
