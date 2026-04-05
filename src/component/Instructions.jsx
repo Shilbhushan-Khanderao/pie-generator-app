@@ -12,38 +12,29 @@ function Instructions() {
         <Popover id={`popover-positioned-left-end`}>
           <Popover.Header as="h3">{`Instructions.`}</Popover.Header>
           <Popover.Body>
-            <strong>1.</strong> Select the Module name from the list.
+            <strong>1.</strong> Select the Course Name and Module Name from the
+            lists.
             <br />
-            <strong>2.</strong> Type the Batch name.
-            <strong>
-              <br />
-              3.
-            </strong>{" "}
-            Select a Faculty name from the given list and second faculty in case
-            of 2 faculties. (can create also, if not available in the list)
-            <strong>
-              <br />
-              4.
-            </strong>{" "}
-            Select Module Coordinator from the list.
-            <strong>
-              <br />
-              5.
-            </strong>{" "}
-            Upload the CSV file. (Only feedback CSV file which has columns
-            Explanation of concepts, Pace of teaching, Interaction with
-            students, Practical application knowledge, and Overall feedback)
-            <strong>
-              <br />
-              6.
-            </strong>{" "}
-            Click on upload button and click on generate to generate piechart.
-            <strong>
-              <br />
-              7.
-            </strong>{" "}
-            Click on download button to download pdf. On download window keep
-            the page size "A4" and remove headers and footers.
+            <strong>2.</strong> Select the Batch Month and Year.
+            <br />
+            <strong>3.</strong> Select or type a Faculty Name (you can add a new
+            name if not in the list).
+            <br />
+            <strong>4.</strong> Select the Module Coordinator from the list.
+            <br />
+            <strong>5.</strong> Upload the CSV feedback file (must have column
+            headers).
+            <br />
+            <strong>6.</strong> Click <em>Upload</em>. A preview of the CSV is
+            shown — review the detected column types and adjust if needed, then
+            click <em>Confirm &amp; Continue</em>.
+            <br />
+            <strong>7.</strong> Click <em>Generate Chart</em> to process and
+            display the charts and comments on screen.
+            <br />
+            <strong>8.</strong> Click <em>Prepare PDF</em> to capture the
+            charts, then click <em>Download PDF</em> to save the report directly
+            — no print dialog required.
           </Popover.Body>
         </Popover>
       }

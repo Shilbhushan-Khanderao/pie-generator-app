@@ -1,3 +1,15 @@
+const REPORT_CONFIG_KEY = "pie_generator_report_config";
+
+export const getReportConfig = () => {
+  try {
+    const stored = localStorage.getItem(REPORT_CONFIG_KEY);
+    if (!stored) return reportConfig;
+    return { ...reportConfig, ...JSON.parse(stored) };
+  } catch {
+    return reportConfig;
+  }
+};
+
 export const reportConfig = {
   pageSize: "A4",
   pageOrientation: "portrait",

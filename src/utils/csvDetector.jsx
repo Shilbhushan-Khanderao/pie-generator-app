@@ -48,6 +48,7 @@ export const detectColumns = (csvData) => {
       confidence += uniqueValues.length <= 6 ? 0.3 : 0.1;
     } else if (avgLength > 15 || uniqueRatio > 0.6) {
       detectedType = "COMMENT";
+      confidence += avgLength > 15 ? 0.3 : 0.2;
     }
 
     // Keyword boosting (overrides base detection if keyword matches)

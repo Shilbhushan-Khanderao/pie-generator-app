@@ -70,3 +70,24 @@ export const importConfig = (file) => {
     reader.readAsText(file);
   });
 };
+
+// ── Report config ─────────────────────────────────────────────────────────────
+const REPORT_KEY = "pie_generator_report_config";
+
+export const loadReportConfig = () => {
+  try {
+    const stored = localStorage.getItem(REPORT_KEY);
+    if (!stored) return null;
+    return JSON.parse(stored);
+  } catch {
+    return null;
+  }
+};
+
+export const saveReportConfig = (data) => {
+  localStorage.setItem(REPORT_KEY, JSON.stringify(data));
+};
+
+export const resetReportConfig = () => {
+  localStorage.removeItem(REPORT_KEY);
+};

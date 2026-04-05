@@ -1,12 +1,18 @@
-import "./App.css";
+import { useState, useCallback } from "react";
 import FooterComponent from "./component/FooterComponent";
 import InputComponent from "./component/InputComponent";
 import NavbarComponent from "./component/NavbarComponent";
 
 function App() {
+  const [masterDataKey, setMasterDataKey] = useState(0);
+  const refreshMasterData = useCallback(
+    () => setMasterDataKey((k) => k + 1),
+    [],
+  );
+
   return (
     <div className="app">
-      <NavbarComponent />
+      <NavbarComponent onSettingsSaved={refreshMasterData} />
       <div
         className="App"
         style={{
@@ -16,9 +22,9 @@ function App() {
           color: "#000000",
         }}
       >
-        <InputComponent></InputComponent>
-        <FooterComponent />
+        <InputComponent key={masterDataKey} />
       </div>
+      <FooterComponent />
     </div>
   );
 }

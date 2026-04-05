@@ -1,14 +1,22 @@
 import React from "react";
 import {
   Document,
+  Font,
   Page,
   Text,
   View,
   Image,
   StyleSheet,
 } from "@react-pdf/renderer";
-import { reportConfig } from "../config/reportConfig";
-import { interpolateTitle } from "../utils/reportHelpers";
+import { getReportConfig } from "../config/reportConfig";
+import { interpolateTitle, sanitizePdfText } from "../utils/reportHelpers";
+
+// Emoji are rendered as inline Twemoji PNG images so they work with the
+// standard Helvetica font. No custom font files are needed.
+Font.registerEmojiSource({
+  format: "png",
+  url: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/",
+});
 
 const styles = StyleSheet.create({
   page: {
@@ -54,12 +62,19 @@ const styles = StyleSheet.create({
     borderBottomColor: "#cccccc",
   },
   commentItem: {
-    marginLeft: 10,
+    flex: 1,
     marginBottom: 3,
     fontSize: 10,
   },
+  commentBullet: {
+    width: 14,
+    fontSize: 10,
+    marginTop: 0,
+  },
   commentRow: {
-    marginBottom: 2,
+    flexDirection: "row",
+    marginBottom: 3,
+    marginLeft: 6,
   },
 });
 
@@ -71,31 +86,40 @@ function TitleBlock({
   batchYear,
   moduleco,
   totalCount,
+  config,
 }) {
-  const title = interpolateTitle(reportConfig.titleTemplate, {
-    courseName,
-    moduleName,
-    faculty,
-    batchMonth,
-    batchYear,
-    moduleco,
-  });
+  const title = sanitizePdfText(
+    interpolateTitle(config.titleTemplate, {
+      courseName,
+      moduleName,
+      faculty,
+      batchMonth,
+      batchYear,
+      moduleco,
+    }),
+  );
 
   return (
     <View style={{ marginBottom: 6 }}>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.hr} />
-      <Text style={styles.metaCell}>Module Name: {moduleName}</Text>
+      <Text style={styles.metaCell}>
+        Module Name: {sanitizePdfText(moduleName)}
+      </Text>
       {batchMonth || batchYear ? (
         <Text style={styles.metaCell}>
-          Batch: {batchMonth} {batchYear}
+          Batch: {sanitizePdfText(batchMonth)} {sanitizePdfText(batchYear)}
         </Text>
       ) : null}
       {faculty && faculty.trim() ? (
-        <Text style={styles.metaCell}>Faculty Name: {faculty}</Text>
+        <Text style={styles.metaCell}>
+          Faculty Name: {sanitizePdfText(faculty)}
+        </Text>
       ) : null}
       {moduleco && moduleco.trim() ? (
-        <Text style={styles.metaCell}>Module Coordinator: {moduleco}</Text>
+        <Text style={styles.metaCell}>
+          Module Coordinator: {sanitizePdfText(moduleco)}
+        </Text>
       ) : null}
       <Text style={styles.metaCell}>Total Feedback Count: {totalCount}</Text>
       <View style={styles.hr} />
@@ -112,22 +136,67 @@ function ReportDocument({
   moduleco,
   totalCount,
   chartImages,
-  chartHeaders,
   commentData,
   commentHeaders,
+  config: configProp,
 }) {
-  // Group charts into pairs — 2 per page, each full-width (single column)
+  const config = configProp ?? getReportConfig();
+  // Group charts into pairs for layout (2 per page)
   const chartPairs = [];
   for (let i = 0; i < chartImages.length; i += 2) {
     chartPairs.push(chartImages.slice(i, i + 2));
   }
 
+  const renderCommentPages = () =>
+    commentData.map((comments, i) => (
+      <Page
+        key={`com-${i}`}
+        size={config.pageSize}
+        orientation={config.pageOrientation}
+        style={styles.page}
+      >
+        <Text style={styles.commentHeader}>
+          {sanitizePdfText(commentHeaders[i] ?? "")}
+        </Text>
+        {comments.map((c, ci) => (
+          <View key={ci} style={styles.commentRow} wrap={false}>
+            <Text style={styles.commentBullet}>{"\u2022"}</Text>
+            <Text style={styles.commentItem}>{sanitizePdfText(c)}</Text>
+          </View>
+        ))}
+      </Page>
+    ));
+
+  const chartOnlyPages = chartPairs.slice(1).map((pair, pi) => (
+    <Page
+      key={`cp-${pi}`}
+      size={config.pageSize}
+      orientation={config.pageOrientation}
+      style={styles.page}
+    >
+      {pair.map((imgSrc, j) => (
+        <View key={j} style={styles.chartBlock} wrap={false}>
+          <Image style={styles.chartImage} src={imgSrc} />
+        </View>
+      ))}
+    </Page>
+  ));
+
+  // Build page sequence respecting sectionOrder
+  const sections = config.sectionOrder ?? ["charts", "comments"];
+  const hasCharts = sections.includes("charts");
+  const hasComments = sections.includes("comments");
+  const chartsFirst =
+    hasCharts && hasComments
+      ? sections.indexOf("charts") < sections.indexOf("comments")
+      : hasCharts;
+
   return (
     <Document>
-      {/* Page 1: title block + first pair of charts */}
+      {/* Page 1: title block + first pair of charts (if charts come first) */}
       <Page
-        size={reportConfig.pageSize}
-        orientation={reportConfig.pageOrientation}
+        size={config.pageSize}
+        orientation={config.pageOrientation}
         style={styles.page}
       >
         <TitleBlock
@@ -138,46 +207,71 @@ function ReportDocument({
           batchYear={batchYear}
           moduleco={moduleco}
           totalCount={totalCount}
+          config={config}
         />
-        {chartPairs[0]?.map((imgSrc, j) => (
-          <View key={j} style={styles.chartBlock} wrap={false}>
-            <Image style={styles.chartImage} src={imgSrc} />
-          </View>
-        ))}
-      </Page>
-
-      {/* One new page per subsequent pair of charts */}
-      {chartPairs.slice(1).map((pair, pi) => (
-        <Page
-          key={`cp-${pi}`}
-          size={reportConfig.pageSize}
-          orientation={reportConfig.pageOrientation}
-          style={styles.page}
-        >
-          {pair.map((imgSrc, j) => (
+        {chartsFirst &&
+          chartPairs[0]?.map((imgSrc, j) => (
             <View key={j} style={styles.chartBlock} wrap={false}>
               <Image style={styles.chartImage} src={imgSrc} />
             </View>
           ))}
-        </Page>
-      ))}
+        {!chartsFirst && commentData[0] !== undefined && (
+          <>
+            <Text style={styles.commentHeader}>
+              {sanitizePdfText(commentHeaders[0] ?? "")}
+            </Text>
+            {commentData[0].map((c, ci) => (
+              <View key={ci} style={styles.commentRow} wrap={false}>
+                <Text style={styles.commentBullet}>{"\u2022"}</Text>
+                <Text style={styles.commentItem}>{sanitizePdfText(c)}</Text>
+              </View>
+            ))}
+          </>
+        )}
+      </Page>
 
-      {/* Each comment section gets its own page */}
-      {commentData.map((comments, i) => (
-        <Page
-          key={`com-${i}`}
-          size={reportConfig.pageSize}
-          orientation={reportConfig.pageOrientation}
-          style={styles.page}
-        >
-          <Text style={styles.commentHeader}>{commentHeaders[i]}</Text>
-          {comments.map((c, ci) => (
-            <View key={ci} style={styles.commentRow} wrap={false}>
-              <Text style={styles.commentItem}>• {c}</Text>
-            </View>
+      {/* Remaining pages in section order */}
+      {chartsFirst ? (
+        <>
+          {chartOnlyPages}
+          {renderCommentPages()}
+        </>
+      ) : (
+        <>
+          {commentData.slice(1).map((comments, i) => (
+            <Page
+              key={`com-extra-${i}`}
+              size={config.pageSize}
+              orientation={config.pageOrientation}
+              style={styles.page}
+            >
+              <Text style={styles.commentHeader}>
+                {sanitizePdfText(commentHeaders[i + 1] ?? "")}
+              </Text>
+              {comments.map((c, ci) => (
+                <View key={ci} style={styles.commentRow} wrap={false}>
+                  <Text style={styles.commentBullet}>{"\u2022"}</Text>
+                  <Text style={styles.commentItem}>{sanitizePdfText(c)}</Text>
+                </View>
+              ))}
+            </Page>
           ))}
-        </Page>
-      ))}
+          {chartPairs.map((pair, pi) => (
+            <Page
+              key={`cp-${pi}`}
+              size={config.pageSize}
+              orientation={config.pageOrientation}
+              style={styles.page}
+            >
+              {pair.map((imgSrc, j) => (
+                <View key={j} style={styles.chartBlock} wrap={false}>
+                  <Image style={styles.chartImage} src={imgSrc} />
+                </View>
+              ))}
+            </Page>
+          ))}
+        </>
+      )}
     </Document>
   );
 }

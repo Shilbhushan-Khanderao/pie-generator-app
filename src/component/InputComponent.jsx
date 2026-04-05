@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import PDFComponent from "./PDFComponent";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
-import Instructions from "./Instructions";
 import Papa from "papaparse";
 import CSVPreviewComponent from "./CSVPreviewComponent";
 import { loadMasterData } from "../utils/persistConfig";
@@ -18,11 +17,12 @@ export const InputComponent = () => {
 
   const [File, setFile] = useState();
   const [courseName, setCourseName] = useState("");
-  const [moduleName, setModuleName] = useState();
-  const [batchMonth, setBatchMonth] = useState([]);
-  const [batchYear, setBatchYear] = useState([]);
-  const [faculty, setFaculty] = useState();
-  const [moduleco, setModuleco] = useState();
+  const [moduleName, setModuleName] = useState("");
+  const [batchMonth, setBatchMonth] = useState("");
+  const [batchYear, setBatchYear] = useState("");
+  const [faculties, setFaculties] = useState([""]);
+  const [moduleco, setModuleco] = useState("");
+  const [formError, setFormError] = useState("");
 
   // Step-based flow: "input" | "preview" | "generate"
   const [step, setStep] = useState("input");
@@ -64,7 +64,23 @@ export const InputComponent = () => {
 
   // Parse CSV first, then go to preview step
   const showDiv = () => {
-    if (!File) return;
+    if (!File) {
+      setFormError("Please upload a CSV file.");
+      return;
+    }
+    if (!moduleName) {
+      setFormError("Please select a Module Name.");
+      return;
+    }
+    if (!batchMonth) {
+      setFormError("Please select a Batch Month.");
+      return;
+    }
+    if (!batchYear) {
+      setFormError("Please select a Batch Year.");
+      return;
+    }
+    setFormError("");
     Papa.parse(File, {
       complete: ({ data }) => {
         setParsedCsvData(data);
@@ -77,6 +93,7 @@ export const InputComponent = () => {
     setStep("input");
     setParsedCsvData(null);
     setColumnMapping(null);
+    setFormError("");
   };
 
   // Called by CSVPreviewComponent when user confirms mapping
@@ -93,9 +110,6 @@ export const InputComponent = () => {
 
   return (
     <div>
-      <div style={{ textAlign: "end" }}>
-        <Instructions />
-      </div>
       <div className="container">
         <div className="text-center">
           <h1>Feedback Generator</h1>
@@ -142,17 +156,54 @@ export const InputComponent = () => {
             <div className="form-group row m-1">
               <label className="col-sm-2 col-form-label">Faculty Name</label>
               <div className="col-sm-10">
-                <CreatableSelect
-                  className="basic-multi-select"
-                  classNamePrefix="select"
-                  options={facultyNameList}
-                  onChange={(event) => setFaculty(event.value)}
-                />
+                {faculties.map((f, i) => (
+                  <div key={i} className="d-flex align-items-center mb-1 gap-2">
+                    <div className="flex-grow-1">
+                      <CreatableSelect
+                        classNamePrefix="select"
+                        isClearable
+                        options={facultyNameList}
+                        value={f ? { value: f, label: f } : null}
+                        onChange={(event) =>
+                          setFaculties((prev) =>
+                            prev.map((x, idx) =>
+                              idx === i ? (event ? event.value : "") : x,
+                            ),
+                          )
+                        }
+                        placeholder={
+                          i === 0 ? "Select faculty..." : "Add another..."
+                        }
+                      />
+                    </div>
+                    {faculties.length > 1 && (
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-outline-danger"
+                        aria-label="Remove faculty"
+                        onClick={() =>
+                          setFaculties((prev) =>
+                            prev.filter((_, idx) => idx !== i),
+                          )
+                        }
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  className="btn btn-sm btn-outline-primary mt-1"
+                  onClick={() => setFaculties((prev) => [...prev, ""])}
+                >
+                  + Add Faculty
+                </button>
               </div>
             </div>
             <div className="form-group row m-1">
               <label className="col-sm-2 col-form-label">
-                Module Coordinater
+                Module Coordinator
               </label>
               <div className="col-sm-10">
                 <Select
@@ -174,6 +225,11 @@ export const InputComponent = () => {
               </div>
             </div>
           </form>
+          {formError && (
+            <div className="text-center text-danger mt-2 mb-1 small">
+              {formError}
+            </div>
+          )}
           <div className="form-group text-center">
             <button
               type="submit"
@@ -204,7 +260,7 @@ export const InputComponent = () => {
                 moduleName={moduleName}
                 batchMonth={batchMonth}
                 batchYear={batchYear}
-                faculty={faculty}
+                faculty={faculties.filter(Boolean).join(", ")}
                 moduleco={moduleco}
                 courseName={courseName}
                 columnMapping={columnMapping}

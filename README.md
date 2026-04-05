@@ -1,70 +1,234 @@
-# Getting Started with Create React App
+﻿# Feedback Report Generator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React + Vite application that converts raw CSV feedback data into professional, downloadable PDF reports. Fill in the report details, upload a CSV, confirm how each column should be treated, then download a vector PDF â€” no print dialog, no page reload.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+- [Features](#features)
+- [Quick Start](#quick-start)
+- [Usage Walkthrough](#usage-walkthrough)
+- [CSV Format](#csv-format)
+- [Settings Panel](#settings-panel)
+- [Configuration Files](#configuration-files)
+- [Project Structure](#project-structure)
+- [Available Scripts](#available-scripts)
+- [Dependencies](#dependencies)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+| Feature | Details |
+|---|---|
+| **Step-by-step workflow** | Form â†’ CSV preview & column mapping â†’ chart generation â†’ PDF download |
+| **Smart column detection** | Auto-detects pie-chart columns vs. comment columns by keyword and value diversity |
+| **Interactive column mapping** | Override any auto-detected assignment; edit feedback vocabulary per column |
+| **Multi-faculty support** | Add multiple faculty names to a single report |
+| **NLP comment analysis** | Expandable sentiment analysis (AFINN + compromise NLP) per comment column |
+| **Semantic chart colours** | Each feedback label (Excellent, Good, Averageâ€¦) always maps to the same colour |
+| **Real PDF generation** | `@react-pdf/renderer` â€” vector text, selectable, no browser print dialog |
+| **Inline PDF preview** | Preview the PDF in-page before downloading |
+| **Runtime settings** | Edit faculty, module, coordinator, and course lists without touching source code |
+| **Persistent configuration** | All settings saved to `localStorage`; survive page refresh |
+| **Export / Import config** | Back up and restore settings as a JSON file |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Quick Start
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Node.js 18+ and npm
+- Any modern browser (Chrome, Firefox, Safari, Edge)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Installation
 
-### `npm run eject`
+```bash
+git clone <repository-url>
+cd pie-generator-app
+npm install
+npm run dev
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Open `http://localhost:5173` in your browser.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Usage Walkthrough
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Step 1 â€” Fill the report form
 
-## Learn More
+Complete all required fields before uploading a file:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Field | Required | Notes |
+|---|---|---|
+| Course Name | No | e.g. `PGCP-AC` |
+| Module Name | **Yes** | Select from the dropdown |
+| Batch | **Yes** | Month + Year |
+| Faculty Name | No | Multiple faculty members supported â€” click **+ Add Faculty** |
+| Module Coordinator | No | Select from the dropdown |
+| CSV File | **Yes** | `.csv` files only |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Click **Upload** to validate the form and parse the CSV.
 
-### Code Splitting
+### Step 2 â€” Review the CSV preview and map columns
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+A preview panel opens showing the first 10 rows of data and an auto-detected type for every column.
 
-### Analyzing the Bundle Size
+**Detected types:**
+- **Pie Chart** â€” column contains a small set of repeating rating values
+- **Comment List** â€” column contains free-text entries
+- **Ignore** â€” column matched an ignore keyword (Name, ID, Email, â€¦) or had low confidence
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+For each column you can:
+- Change the type using the **Assign As** dropdown
+- Click **Edit Vocabulary** (Pie Chart columns) to check/uncheck which values to count, or add new ones
+- Click **Edit Noise Filters** (Comment columns) to add/remove strings that should be stripped from the comment list
 
-### Making a Progressive Web App
+Click **Confirm & Continue â†’** when done.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Step 3 â€” Generate charts
 
-### Advanced Configuration
+Click **Generate Chart**. The app re-parses the CSV using your confirmed column mapping and renders the on-screen preview (pie charts + comment lists).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Each comment column has an expandable **Analysis** card showing:
+- Response count, positive count, average AFINN sentiment score, average comment length
+- Tone overview bar chart (Positive / Neutral / Negative)
+- Per-comment sentiment scatter plot
+- Top key phrases (NLP noun extraction)
+- Top descriptive terms (adjectives and verbs)
 
-### Deployment
+### Step 4 â€” Prepare and download the PDF
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+1. Click **Prepare PDF** â€” captures each chart as a high-resolution PNG.
+2. A **Download PDF** button appears. Click it to save the file.
+3. Optionally click **Preview PDF** to view the document inline before saving.
 
-### `npm run build` fails to minify
+The PDF file is named `feedback_<module>_<month>_<year>.pdf`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## CSV Format
+
+The CSV must have a header row. Column names drive automatic detection.
+
+### Auto-detected as Pie Chart
+
+Header contains any of: `Explanation`, `Pace`, `Interaction`, `Practical`, `Overall`, `Rating`, `Score`, `Quality`
+
+Expected cell values (default vocabulary):
+
+| Category | Values |
+|---|---|
+| Quality / satisfaction | `Excellent`, `Very Good`, `Good`, `Average`, `Poor` |
+| Pace | `Very Fast`, `Fast`, `Normal`, `Slow`, `Very Slow` |
+
+Any other values the CSV contains can be added through the **Edit Vocabulary** panel in Step 2.
+
+### Auto-detected as Comment
+
+Header contains any of: `Theory`, `Lab`, `Comments`, `Remarks`, `Feedback`, `Suggestion`, `Review`
+
+### Auto-ignored
+
+Header contains any of: `Name`, `ID`, `PRN`, `Email`, `Roll`, `Timestamp`
+
+### Minimal example
+
+```csv
+Name,Explanation (Theory),Pace of Teaching,Overall Satisfaction,Theory Suggestions
+Student A,Excellent,Normal,Very Good,Very well explained
+Student B,Good,Fast,Good,Could slow down a bit
+Student C,Very Good,Normal,Excellent,Nothing to add
+```
+
+---
+
+## Settings Panel
+
+Click the **âš™** gear icon in the top-right of the navbar to open the Settings Panel.
+
+### What you can edit
+
+| Section | What it controls |
+|---|---|
+| **Course List** | Dropdown options for Course Name |
+| **Faculty List** | Dropdown options for Faculty Name (also supports free-text entry) |
+| **Module Coordinator List** | Dropdown options for Module Coordinator |
+| **Module List** | Module name (full) and its abbreviation shown in the dropdown |
+| **Report Settings** | Page size, orientation, charts per row, section order, title template, footer text |
+
+### Title template tokens
+
+The title template supports these tokens, which are replaced at render time:
+
+`{courseName}` `{moduleName}` `{faculty}` `{batchMonth}` `{batchYear}` `{moduleco}`
+
+**Default template:** `{courseName} Module Feedback Report - {moduleName}`
+
+### Export / Import Config
+
+- **Export Config** â€” downloads `pie_generator_config.json` containing all your overrides.
+- **Import Config** â€” restores settings from a previously exported JSON file.
+- **Reset to Defaults** â€” clears all overrides and reverts to the compiled-in defaults.
+
+Settings are stored in `localStorage` under the key `pie_generator_master` (master data) and `pie_generator_report_config` (report layout).
+
+---
+
+## Configuration Files
+
+These files contain defaults that apply when no `localStorage` overrides exist. Edit them to change the out-of-the-box values.
+
+### `src/config/masterData.jsx`
+
+Default lists for the form dropdowns.
+
+| Export | Type | Purpose |
+|---|---|---|
+| `courseNameOptions` | `{value, label}[]` | Course name dropdown |
+| `moduleCoordinatorName` | `{value, label}[]` | Coordinator dropdown |
+| `moduleNameList` | `{value, label}[]` | Module dropdown (label = abbreviation) |
+| `facultyNameList` | `{value, label}[]` | Faculty dropdown |
+
+### `src/config/csvConfig.jsx`
+
+Keywords and vocabulary used by the CSV parser and column detector.
+
+| Key | Purpose |
+|---|---|
+| `chartKeywords` | Header substrings that suggest a Pie Chart column |
+| `commentKeywords` | Header substrings that suggest a Comment column |
+| `ignoreKeywords` | Header substrings that force a column to be ignored |
+| `defaultFeedbackVocabulary` | Rating labels counted when no custom vocabulary is set |
+| `commentNoiseFilters` | Strings stripped from comment lists (case-insensitive) |
+
+### `src/config/reportConfig.jsx`
+
+PDF layout defaults.
+
+| Key | Default | Purpose |
+|---|---|---|
+| `pageSize` | `"A4"` | `"A4"` \| `"LETTER"` \| `"A3"` |
+| `pageOrientation` | `"portrait"` | `"portrait"` \| `"landscape"` |
+| `titleTemplate` | `"{courseName} Module Feedback Report - {moduleName}"` | Report title |
+| `sectionOrder` | `["charts", "comments"]` | Swap to put comments before charts |
+| `chartsPerRow` | `2` | Reserved for future layout use |
+| `chartColors` | 5-colour palette | Fallback colours for unrecognised feedback labels |
+| `footerText` | `"Â© C-DAC Mumbaiâ€¦"` | Footer line on every PDF page |
+
+`feedbackColors` defines the per-label semantic colour map (e.g. `excellent â†’ #43a047`).
+
+### `src/config/themeConfig.jsx`
+
+UI colour values consumed by the navbar and footer.
+
+| Key | Purpose |
+|---|---|
+| `navbarGradient` | CSS gradient for the sticky navbar background |
+| `footerGradient` | CSS gradient for the fixed footer background |
+| `footerText` | Copyright line shown in the UI footer |
+
+---

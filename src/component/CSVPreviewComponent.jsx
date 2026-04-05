@@ -7,6 +7,7 @@ function CSVPreviewComponent({ csvData, onConfirm, onCancel }) {
   const [mapping, setMapping] = useState([]);
   const [expandedVocab, setExpandedVocab] = useState(null);
   const [expandedNoise, setExpandedNoise] = useState(null);
+  const [confirmError, setConfirmError] = useState("");
 
   const headers = csvData[0];
   const previewRows = csvData.slice(1, 11); // first 10 data rows
@@ -50,8 +51,15 @@ function CSVPreviewComponent({ csvData, onConfirm, onCancel }) {
   };
 
   const handleConfirm = () => {
-    // Only pass non-ignored columns downstream
-    onConfirm(mapping.filter((m) => m.type !== "IGNORE"));
+    const active = mapping.filter((m) => m.type !== "IGNORE");
+    if (active.length === 0) {
+      setConfirmError(
+        "Assign at least one column as Pie Chart or Comment List before continuing.",
+      );
+      return;
+    }
+    setConfirmError("");
+    onConfirm(active);
   };
 
   const typeLabel = (type) => {
@@ -152,6 +160,7 @@ function CSVPreviewComponent({ csvData, onConfirm, onCancel }) {
                                   <button
                                     className="btn-close btn-close-white btn-sm ms-1"
                                     style={{ fontSize: "0.5rem" }}
+                                    aria-label={`Remove vocabulary value ${v}`}
                                     onClick={() =>
                                       updateVocabulary(
                                         desc.index,
@@ -209,6 +218,7 @@ function CSVPreviewComponent({ csvData, onConfirm, onCancel }) {
                                   <button
                                     className="btn-close btn-sm ms-1"
                                     style={{ fontSize: "0.5rem" }}
+                                    aria-label={`Remove noise filter ${f}`}
                                     onClick={() =>
                                       updateNoiseFilters(
                                         desc.index,
@@ -248,6 +258,11 @@ function CSVPreviewComponent({ csvData, onConfirm, onCancel }) {
           </table>
 
           <div className="d-flex justify-content-end gap-2 mt-3">
+            {confirmError && (
+              <span className="text-danger small align-self-center me-auto">
+                {confirmError}
+              </span>
+            )}
             <button className="btn btn-secondary" onClick={onCancel}>
               Cancel
             </button>

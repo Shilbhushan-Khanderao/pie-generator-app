@@ -1,5 +1,14 @@
 export const csvConfig = {
-  chartKeywords: ["Explanation", "Pace", "Interaction", "Practical", "Overall"],
+  chartKeywords: [
+    "Explanation",
+    "Pace",
+    "Interaction",
+    "Practical",
+    "Overall",
+    "Rating",
+    "Score",
+    "Quality",
+  ],
   commentKeywords: [
     "Theory",
     "Lab",
@@ -7,6 +16,7 @@ export const csvConfig = {
     "Remarks",
     "Feedback",
     "Suggestion",
+    "Review",
   ],
   ignoreKeywords: ["Name", "ID", "PRN", "Email", "Roll", "Timestamp"],
   defaultFeedbackVocabulary: [
@@ -29,6 +39,9 @@ export const csvConfig = {
     "nothing",
     "no comment",
     "no comments",
+    "No",
+    "None",
+    "Null",
     ".",
     "na.",
     "n.a.",

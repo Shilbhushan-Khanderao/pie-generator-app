@@ -11,7 +11,7 @@ export default defineConfig({
     port: 4000,
   },
   optimizeDeps: {
-    include: ["@react-pdf/renderer", "buffer"],
+    include: ["@react-pdf/renderer", "buffer", "sentiment", "compromise"],
   },
   build: {
     rollupOptions: {

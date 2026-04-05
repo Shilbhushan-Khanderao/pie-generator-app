@@ -3,8 +3,13 @@ import logo from "./image/logo.png";
 import SettingsPanel from "./SettingsPanel";
 import { themeConfig } from "../config/themeConfig";
 
-function NavbarComponent() {
+function NavbarComponent({ onSettingsSaved }) {
   const [showSettings, setShowSettings] = useState(false);
+
+  const handleSettingsSaved = () => {
+    setShowSettings(false);
+    if (onSettingsSaved) onSettingsSaved();
+  };
 
   return (
     <>
@@ -42,13 +47,14 @@ function NavbarComponent() {
         <button
           className="btn btn-outline-secondary btn-sm"
           title="Settings"
+          aria-label="Open settings"
           onClick={() => setShowSettings(true)}
         >
           ⚙ Settings
         </button>
       </nav>
 
-      {showSettings && <SettingsPanel onClose={() => setShowSettings(false)} />}
+      {showSettings && <SettingsPanel onClose={handleSettingsSaved} />}
     </>
   );
 }

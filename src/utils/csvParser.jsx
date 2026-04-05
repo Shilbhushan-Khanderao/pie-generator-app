@@ -4,24 +4,26 @@ import { csvConfig } from "../config/csvConfig";
 
 export const processCsvData = (csvData) => {
   const headers = csvData[0];
+  const dataRows = csvData
+    .slice(1)
+    .filter((row) => row.some((cell) => cell && cell.trim()));
   const chartHeaders = [];
   const chartData = [];
   const commentHeaders = [];
   const commentData = [];
-  const totalFeedback = csvData.length - 1; // BUG FIX: exclude header row
+  const totalFeedback = dataRows.length;
 
   for (let i = 0; i < headers.length; i++) {
     if (csvConfig.chartKeywords.some((k) => headers[i].includes(k))) {
       chartHeaders.push(headers[i]);
-      chartData.push(createChartData(csvData, i));
+      chartData.push(createChartData(dataRows, i));
     }
     if (csvConfig.commentKeywords.some((k) => headers[i].includes(k))) {
       commentHeaders.push(headers[i]);
-      commentData.push(extractComments(csvData, i));
+      commentData.push(extractComments(dataRows, i));
     }
   }
 
-  // BUG FIX: totalFeedback returned once from here, not set inside the loop
   return {
     chartHeaders,
     chartData,
@@ -31,15 +33,14 @@ export const processCsvData = (csvData) => {
   };
 };
 
-export const createChartData = (csvData, columnIndex) => {
+export const createChartData = (dataRows, columnIndex) => {
   const feedbackCounts = {};
   csvConfig.defaultFeedbackVocabulary.forEach((v) => {
     feedbackCounts[v] = 0;
   });
 
-  // BUG FIX: start at i=1 to skip the header row
-  for (let i = 1; i < csvData.length; i++) {
-    const feedback = csvData[i][columnIndex];
+  for (let i = 0; i < dataRows.length; i++) {
+    const feedback = dataRows[i][columnIndex];
     if (Object.prototype.hasOwnProperty.call(feedbackCounts, feedback)) {
       feedbackCounts[feedback]++;
     }
@@ -50,10 +51,9 @@ export const createChartData = (csvData, columnIndex) => {
     .map(([feedback, count]) => ({ feedback, count }));
 };
 
-export const extractComments = (csvData, columnIndex) => {
+export const extractComments = (dataRows, columnIndex) => {
   const noiseFilters = csvConfig.commentNoiseFilters;
-  return csvData
-    .slice(1) // skip header row
+  return dataRows
     .map((row) => row[columnIndex])
     .filter(
       (comment) =>
@@ -66,22 +66,25 @@ export const extractComments = (csvData, columnIndex) => {
 // ─── Phase 2: mapping-based parsing ─────────────────────────────────────────
 
 export const processCsvDataWithMapping = (csvData, columnMapping) => {
+  const dataRows = csvData
+    .slice(1)
+    .filter((row) => row.some((cell) => cell && cell.trim()));
   const chartHeaders = [];
   const chartData = [];
   const commentHeaders = [];
   const commentData = [];
-  const totalFeedback = csvData.length - 1;
+  const totalFeedback = dataRows.length;
 
   for (const col of columnMapping) {
     if (col.type === "PIE_CHART") {
       chartHeaders.push(col.header);
       chartData.push(
-        createChartDataWithVocab(csvData, col.index, col.vocabulary),
+        createChartDataWithVocab(dataRows, col.index, col.vocabulary),
       );
     } else if (col.type === "COMMENT") {
       commentHeaders.push(col.header);
       commentData.push(
-        extractCommentsWithFilters(csvData, col.index, col.noiseFilters),
+        extractCommentsWithFilters(dataRows, col.index, col.noiseFilters),
       );
     }
   }
@@ -95,14 +98,14 @@ export const processCsvDataWithMapping = (csvData, columnMapping) => {
   };
 };
 
-export const createChartDataWithVocab = (csvData, columnIndex, vocabulary) => {
+export const createChartDataWithVocab = (dataRows, columnIndex, vocabulary) => {
   const feedbackCounts = {};
   vocabulary.forEach((v) => {
     feedbackCounts[v] = 0;
   });
 
-  for (let i = 1; i < csvData.length; i++) {
-    const feedback = csvData[i][columnIndex];
+  for (let i = 0; i < dataRows.length; i++) {
+    const feedback = dataRows[i][columnIndex];
     if (Object.prototype.hasOwnProperty.call(feedbackCounts, feedback)) {
       feedbackCounts[feedback]++;
     }
@@ -114,12 +117,11 @@ export const createChartDataWithVocab = (csvData, columnIndex, vocabulary) => {
 };
 
 export const extractCommentsWithFilters = (
-  csvData,
+  dataRows,
   columnIndex,
   noiseFilters,
 ) => {
-  return csvData
-    .slice(1)
+  return dataRows
     .map((row) => row[columnIndex])
     .filter(
       (comment) =>

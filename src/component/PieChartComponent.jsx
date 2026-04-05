@@ -21,7 +21,6 @@ export const PieChartComponent = ({
   const getColor = (feedbackValue, fallbackIndex) =>
     feedbackColors[feedbackValue?.toLowerCase()] ||
     FALLBACK_COLORS[fallbackIndex % FALLBACK_COLORS.length];
-  const shouldPageBreak = count % 2 === 1 ? true : false;
 
   const RADIAN = Math.PI / 180;
 
@@ -52,7 +51,7 @@ export const PieChartComponent = ({
   };
 
   return (
-    <div style={{ pageBreakAfter: shouldPageBreak ? "always" : "auto" }}>
+    <div>
       <div className="row justify-content-center text-center">
         <div className={fullWidth ? "col-12 pdf" : "col-md-8 pdf"}>
           <br />
