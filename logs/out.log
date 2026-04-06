@@ -1,0 +1,43 @@
+2026-04-06 10:37:25 +05:30: 
+2026-04-06 10:37:25 +05:30: > pie-generator-app@0.1.0 preview
+2026-04-06 10:37:25 +05:30: > vite preview
+2026-04-06 10:37:25 +05:30: 
+2026-04-06 10:37:25 +05:30:   ➜  Local:   http://localhost:4173/
+2026-04-06 10:37:25 +05:30:   ➜  Network: use --host to expose
+2026-04-06 10:43:46 +05:30: 
+2026-04-06 10:43:46 +05:30: > pie-generator-app@0.1.0 preview
+2026-04-06 10:43:46 +05:30: > vite preview
+2026-04-06 10:43:46 +05:30: 
+2026-04-06 10:43:47 +05:30:   ➜  Local:   http://localhost:4173/
+2026-04-06 10:43:47 +05:30:   ➜  Network: use --host to expose
+2026-04-06 10:44:26 +05:30: 
+2026-04-06 10:44:26 +05:30: > pie-generator-app@0.1.0 preview
+2026-04-06 10:44:26 +05:30: > vite preview
+2026-04-06 10:44:26 +05:30: 
+2026-04-06 10:44:26 +05:30:   ➜  Local:   http://localhost:4173/
+2026-04-06 10:44:26 +05:30:   ➜  Network: use --host to expose
+2026-04-06 10:44:51 +05:30: 
+2026-04-06 10:44:51 +05:30: > pie-generator-app@0.1.0 preview
+2026-04-06 10:44:51 +05:30: > vite preview --port ${PORT:-4000}
+2026-04-06 10:44:51 +05:30: 
+2026-04-06 10:44:51 +05:30:   ➜  Local:   http://localhost:4173/
+2026-04-06 10:44:51 +05:30:   ➜  Network: use --host to expose
+2026-04-06 10:45:21 +05:30: Starting pie-generator-app on port 4000...
+2026-04-06 10:45:21 +05:30: Port 4000 is in use, trying another one...
+2026-04-06 10:45:21 +05:30:   ➜  Local:   http://localhost:4001/
+2026-04-06 10:45:21 +05:30:   ➜  Network: use --host to expose
+2026-04-06 10:45:45 +05:30: 
+2026-04-06 10:45:45 +05:30: Shutting down gracefully...
+2026-04-06 10:45:45 +05:30: Starting pie-generator-app on port 4000...
+2026-04-06 10:45:46 +05:30:   ➜  Local:   http://localhost:4000/
+2026-04-06 10:45:46 +05:30:   ➜  Network: use --host to expose
+2026-04-06 10:46:07 +05:30: 
+2026-04-06 10:46:07 +05:30: Shutting down gracefully...
+2026-04-06 10:46:08 +05:30: Starting pie-generator-app on port 4000...
+2026-04-06 10:46:08 +05:30:   ➜  Local:   http://localhost:4000/
+2026-04-06 10:46:08 +05:30:   ➜  Network: use --host to expose
+2026-04-06 10:48:40 +05:30: 
+2026-04-06 10:48:40 +05:30: Shutting down gracefully...
+2026-04-06 10:48:40 +05:30: Starting pie-generator-app on port 4000...
+2026-04-06 10:48:41 +05:30:   ➜  Local:   http://localhost:4000/
+2026-04-06 10:48:41 +05:30:   ➜  Network: http://10.212.13.148:4000/

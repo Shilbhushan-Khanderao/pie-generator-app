@@ -8,7 +8,12 @@ export default defineConfig({
   // so the build works when deployed to a sub-path (e.g. gh-pages).
   base: "./",
   server: {
-    port: 4000,
+    host: '0.0.0.0',
+    port: parseInt(process.env.PORT || 4000),
+  },
+  preview: {
+    host: '0.0.0.0',
+    port: parseInt(process.env.PORT || 4173),
   },
   optimizeDeps: {
     include: ["@react-pdf/renderer", "buffer", "sentiment", "compromise"],

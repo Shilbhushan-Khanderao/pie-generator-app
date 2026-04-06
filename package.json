@@ -24,7 +24,7 @@
     "dev": "vite",
     "start": "vite",
     "build": "vite build",
-    "preview": "vite preview",
+    "preview": "vite preview --port ${PORT:-4000}",
     "test": "vitest run",
     "test:watch": "vitest",
     "predeploy": "npm run build",
